@@ -280,6 +280,7 @@ export async function scrapeData() {
 
     let currentTab = 'top-gainers';
     let newLaunchTableData = [];
+    let filteredData = [];
     let intervalCounter = 0;
 
     async function runInterval() {
@@ -359,7 +360,14 @@ export async function scrapeData() {
                         const rows = Array.from(table.querySelectorAll("tr"));
                         return rows.map(row => {
                             const columns = Array.from(row.querySelectorAll("td"));
-                            return columns.map(col => col.innerText?.trim() || '');
+                            return columns.map((col, index) => {
+                                // Check if this cell contains a trade link
+                                const tradeLink = col.querySelector('a[href*="axiom.trade"]');
+                                if (tradeLink) {
+                                    return tradeLink.href || tradeLink.getAttribute('href') || '';
+                                }
+                                return col.innerText?.trim() || '';
+                            });
                         });
                     });
 
@@ -374,7 +382,11 @@ export async function scrapeData() {
                             newLaunchTableData: newLaunchTableData,
                         };
 
-                        const filteredData = filterAndFormatData(tableData, otherData);
+                        if (tableData.length !== 0 || tableData[0].length !== 0) {
+                            filteredData = filterAndFormatData(tableData, otherData);
+                        } else {
+                            console.log(`No valid data extracted from Top 75 tab`);
+                        }
 
                         // Save Top 75 data if needed
                         const outputPath = path.join(__dirname, "filteredDataWithOther.json");

@@ -27,8 +27,63 @@ app.use(express.json());
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve the index.html at root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
+const filteredDataPath = path.join(__dirname, 'filteredDataWithOther.json');
+
+// Function to read and emit filtered data
+function emitFilteredData() {
+  try {
+    if (fs.existsSync(filteredDataPath)) {
+      const data = fs.readFileSync(filteredDataPath, 'utf8');
+      const parsedData = JSON.parse(data);
+      
+      // Emit to all connected clients
+      io.emit('filteredDataUpdate', {
+        timestamp: new Date().toISOString(),
+        data: parsedData
+      });
+      
+      console.log(`Emitted filtered data to ${io.engine.clientsCount} connected clients`);
+    } else {
+      console.log('Filtered data file not found');
+    }
+  } catch (error) {
+    console.error('Error reading/emitting filtered data:', error);
+  }
+}
+
+// Watch for file changes and emit data when file is updated
+if (fs.existsSync(filteredDataPath)) {
+  console.log('Watching filtered data file for changes...');
+  
+  fs.watchFile(filteredDataPath, (curr, prev) => {
+    console.log('Filtered data file changed, emitting update...');
+    emitFilteredData();
+  });
+} else {
+  console.log('Filtered data file not found, will start watching when it exists');
+}
+
+// Emit data every 10 seconds (continuous updates)
+setInterval(() => {
+  if (io.engine.clientsCount > 0) {
+    emitFilteredData();
+  }
+}, 5000); // 10 seconds
+
+
 io.on('connection', (socket) => {
   console.log('🔗 New client connected')
+
+  setTimeout(() => {
+    emitFilteredData();
+  }, 4000);
+  
   
   socket.on('disconnect', () => {
     console.log('🔌 Client disconnected');
