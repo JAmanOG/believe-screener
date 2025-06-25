@@ -1,0 +1,2084 @@
+{
+  "otherData": {
+    "globalStats": [
+      {
+        "title": "Lifetime Volume",
+        "value": "$3,793,844,686",
+        "subDetail": "Calculated about 1 hour ago",
+        "type": "lifetime-volume"
+      },
+      {
+        "title": "Coin Launches",
+        "value": "40,639",
+        "subDetail": "@launchcoin",
+        "type": "coin-launches"
+      },
+      {
+        "title": "Active Coins",
+        "value": "176",
+        "subDetail": "5+ trades in 24h",
+        "type": "active-coins"
+      }
+    ],
+    "majorCardDetails": [
+      {
+        "title": "Total Market Cap",
+        "value": "$241.28M",
+        "subDetails": [
+          "$120.89M Creator Coins",
+          "$120.39M LAUNCHCOIN"
+        ]
+      },
+      {
+        "title": "24h Volume",
+        "value": "$41.87M",
+        "subDetails": [
+          "$17.61M Creator Coins",
+          "$24.26M LAUNCHCOIN"
+        ]
+      },
+      {
+        "title": "24h Transactions",
+        "value": "170.58K",
+        "subDetails": [
+          "92.35K Creator Coins",
+          "78.23K LAUNCHCOIN"
+        ]
+      },
+      {
+        "title": "Total Liquidity",
+        "value": "$24.66M",
+        "subDetails": [
+          "$19.16M Creator Coins",
+          "$5.49M LAUNCHCOIN"
+        ]
+      }
+    ],
+    "newLaunchTableData": [
+      {
+        "token": {
+          "symbol": "GMX",
+          "name": "Gamex"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "DGG9...kBLV",
+          "tradeLink": "https://axiom.trade/t/DGG9oUgJ7FieAWvUGtB8Pf2cWRLtrPbP9s63AeugkBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@isuryaprataap",
+          "link": "https://twitter.com/isuryaprataap"
+        },
+        "description": "This is a Gamex platform",
+        "launchTime": "1h ago"
+      },
+      {
+        "token": {
+          "symbol": "MIN",
+          "name": "Minri AI"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "DaWd...kBLV",
+          "tradeLink": "https://axiom.trade/t/DaWdcJf91jhoxRbXeEhkLjTizxwoNW9Q1BRr3F15kBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@kimberl8938282",
+          "link": "https://twitter.com/kimberl8938282"
+        },
+        "description": "Minrim AI brings real time intelligence to the Solana blockchain with predictive AI agents, live data, and seamless tool...",
+        "launchTime": "2h ago"
+      },
+      {
+        "token": {
+          "symbol": "ZIP",
+          "name": "Ziplana"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "BtZA...yBLV",
+          "tradeLink": "https://axiom.trade/t/BtZAV86UTtLWQJJd2GEwgWTPsKQLyu4GrtUSSxLnyBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@lyli46445078121",
+          "link": "https://twitter.com/lyli46445078121"
+        },
+        "description": "-",
+        "launchTime": "2h ago"
+      },
+      {
+        "token": {
+          "symbol": "BOLD",
+          "name": "BOLD MKBHD"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "7EYH...zBLV",
+          "tradeLink": "https://axiom.trade/t/7EYHjNmpWipfu2XZ5oitEL8cmiipHYUMPtMdvBKnzBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@CupOfCoffee2025",
+          "link": "https://twitter.com/CupOfCoffee2025"
+        },
+        "description": "Pure memes about promise and how to doge that",
+        "launchTime": "2h ago"
+      },
+      {
+        "token": {
+          "symbol": "3LOOP",
+          "name": "3 LOOP DECODER"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "AUMD...oBLV",
+          "tradeLink": "https://axiom.trade/t/AUMDnqAfPZHoCp4nduik8C4h7WVVPAdLMd8JJ1vjoBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@jreeve_eth",
+          "link": "https://twitter.com/jreeve_eth"
+        },
+        "description": "TS library to get human-readable transactions. Grantees \n@solana\n@gitcoin\n@optimism",
+        "launchTime": "3h ago"
+      },
+      {
+        "token": {
+          "symbol": "WING",
+          "name": "flappybtc"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "HvpN...dBLV",
+          "tradeLink": "https://axiom.trade/t/HvpNppbzeFE65CXvdfwDhDpmvzGwND9DXpivUgwfdBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@Flappy_btc",
+          "link": "https://twitter.com/Flappy_btc"
+        },
+        "description": "flappy btc game on solana",
+        "launchTime": "4h ago"
+      },
+      {
+        "token": {
+          "symbol": "CANDY",
+          "name": "Candy Crush Saga"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "7PSt...fBLV",
+          "tradeLink": "https://axiom.trade/t/7PStTknUnut69RhMJ11PkQJKYtvNha3MMWKv9UcVfBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@CrushSaga1234",
+          "link": "https://twitter.com/CrushSaga1234"
+        },
+        "description": "Start playing Candy Crush Saga today – a legendary puzzle game loved by millions of players around the world.",
+        "launchTime": "4h ago"
+      },
+      {
+        "token": {
+          "symbol": "SOLPICK",
+          "name": "solpick"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "AQKW...rBLV",
+          "tradeLink": "https://axiom.trade/t/AQKW5KBWtDN7xVnj5aM6zgmWmNKra4K8KPv9M7qjrBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@solpick_io",
+          "link": "https://twitter.com/solpick_io"
+        },
+        "description": "ASKED QUESTIONS\nWhat is solpick.io?\nSolpick.io is an Free SOL faucet that enables users the ability to earn free SOL ev...",
+        "launchTime": "4h ago"
+      },
+      {
+        "token": {
+          "symbol": "EGGPLANT",
+          "name": "EggPlant Team"
+        },
+        "curvePercentage": "12",
+        "contract": {
+          "address": "8wjm...bBLV",
+          "tradeLink": "https://axiom.trade/t/8wjmCdWpY5PibZhdgcraxFsgDe3sCThHBxZ2x9jNbBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@E1FDev",
+          "link": "https://twitter.com/E1FDev"
+        },
+        "description": "Join our $eggplant TEAM!\nWe're not just a bunch of veggie enthusiasts; we're egg-cited about eggplant recipes, egg-spert...",
+        "launchTime": "6h ago"
+      },
+      {
+        "token": {
+          "symbol": "LOCKEDIN",
+          "name": "Locked in syndrome"
+        },
+        "curvePercentage": "0",
+        "contract": {
+          "address": "26k9...vBLV",
+          "tradeLink": "https://axiom.trade/t/26k9JZEVtVqcCdom8py1hJwPcCNrfUi2AqhG6SK1vBLV/@bscreener"
+        },
+        "twitter": {
+          "handle": "@Dark_Soul_rules",
+          "link": "https://twitter.com/Dark_Soul_rules"
+        },
+        "description": "$LockedIn  Locked in syndrome",
+        "launchTime": "6h ago"
+      }
+    ],
+    "currentTab": "top-gainers"
+  },
+  "tableData": [
+    {
+      "token": "LAUNCHCOIN",
+      "tokenName": "Launch Coin on Believe",
+      "tradeCA": "TRADE",
+      "price": "$0.120416",
+      "marketCap": "$120.39M",
+      "marketCapValue": 120390000,
+      "change30m": "↓3.34%",
+      "change24h": "↑2.77%",
+      "change24hValue": 2.77,
+      "volume24h": "$24.26M",
+      "volume24hValue": 24260000,
+      "liquidityFull": {
+        "liquidity": "5.49M",
+        "buy": "41.06K",
+        "sell": "37.45K"
+      },
+      "liquidity": "5.49M",
+      "buyPressure": "41.06K",
+      "sellPressure": "37.45K",
+      "holders": "33K",
+      "age": "5mo"
+    },
+    {
+      "token": "DUPE",
+      "tokenName": "Dupe",
+      "tradeCA": "TRADE",
+      "price": "$0.025025",
+      "marketCap": "$25.02M",
+      "marketCapValue": 25020000,
+      "change30m": "↑1.27%",
+      "change24h": "↓5.48%",
+      "change24hValue": 5.48,
+      "volume24h": "$1.08M",
+      "volume24hValue": 1080000,
+      "liquidityFull": {
+        "liquidity": "2.33M",
+        "buy": "3.13K",
+        "sell": "2.19K"
+      },
+      "liquidity": "2.33M",
+      "buyPressure": "3.13K",
+      "sellPressure": "2.19K",
+      "holders": "7K",
+      "age": "1mo"
+    },
+    {
+      "token": "KLED",
+      "tokenName": "KLEDAI",
+      "tradeCA": "TRADE",
+      "price": "$0.019236",
+      "marketCap": "$19.23M",
+      "marketCapValue": 19230000,
+      "change30m": "↓6.11%",
+      "change24h": "↑2.57%",
+      "change24hValue": 2.57,
+      "volume24h": "$2.26M",
+      "volume24hValue": 2260000,
+      "liquidityFull": {
+        "liquidity": "1.78M",
+        "buy": "6.09K",
+        "sell": "4.52K"
+      },
+      "liquidity": "1.78M",
+      "buyPressure": "6.09K",
+      "sellPressure": "4.52K",
+      "holders": "5K",
+      "age": "4w"
+    },
+    {
+      "token": "STARTUP",
+      "tokenName": "Startup",
+      "tradeCA": "TRADE",
+      "price": "$0.013059",
+      "marketCap": "$12.93M",
+      "marketCapValue": 12930000,
+      "change30m": "↓2.50%",
+      "change24h": "↑62.01%",
+      "change24hValue": 62.01,
+      "volume24h": "$2.16M",
+      "volume24hValue": 2160000,
+      "liquidityFull": {
+        "liquidity": "1.16M",
+        "buy": "4.32K",
+        "sell": "3.97K"
+      },
+      "liquidity": "1.16M",
+      "buyPressure": "4.32K",
+      "sellPressure": "3.97K",
+      "holders": "6K",
+      "age": "1mo"
+    },
+    {
+      "token": "KNET",
+      "tokenName": "Kingnet AI",
+      "tradeCA": "TRADE",
+      "price": "$0.008762",
+      "marketCap": "$8.76M",
+      "marketCapValue": 8760000,
+      "change30m": "↑0.91%",
+      "change24h": "↓7.96%",
+      "change24hValue": 7.96,
+      "volume24h": "$671.20K",
+      "volume24hValue": 671200,
+      "liquidityFull": {
+        "liquidity": "928.44K",
+        "buy": "2K",
+        "sell": "1.81K"
+      },
+      "liquidity": "928.44K",
+      "buyPressure": "2K",
+      "sellPressure": "1.81K",
+      "holders": "6K",
+      "age": "1mo"
+    },
+    {
+      "token": "PCULE",
+      "tokenName": "Polycule",
+      "tradeCA": "TRADE",
+      "price": "$0.008067",
+      "marketCap": "$8.07M",
+      "marketCapValue": 8070000,
+      "change30m": "↑1.99%",
+      "change24h": "↓4.97%",
+      "change24hValue": 4.97,
+      "volume24h": "$800.19K",
+      "volume24hValue": 800190,
+      "liquidityFull": {
+        "liquidity": "1.30M",
+        "buy": "1.91K",
+        "sell": "1.96K"
+      },
+      "liquidity": "1.30M",
+      "buyPressure": "1.91K",
+      "sellPressure": "1.96K",
+      "holders": "4K",
+      "age": "1mo"
+    },
+    {
+      "token": "FITCOIN",
+      "tokenName": "FITCOIN",
+      "tradeCA": "TRADE",
+      "price": "$0.005295",
+      "marketCap": "$4.89M",
+      "marketCapValue": 4890000,
+      "change30m": "↑9.45%",
+      "change24h": "↑28.43%",
+      "change24hValue": 28.43,
+      "volume24h": "$623.03K",
+      "volume24hValue": 623030,
+      "liquidityFull": {
+        "liquidity": "595.72K",
+        "buy": "1.66K",
+        "sell": "1.42K"
+      },
+      "liquidity": "595.72K",
+      "buyPressure": "1.66K",
+      "sellPressure": "1.42K",
+      "holders": "4K",
+      "age": "1mo"
+    },
+    {
+      "token": "YAPPER",
+      "tokenName": "Yapper",
+      "tradeCA": "TRADE",
+      "price": "$0.003081",
+      "marketCap": "$3.07M",
+      "marketCapValue": 3070000,
+      "change30m": "↑0.25%",
+      "change24h": "↓0.42%",
+      "change24hValue": 0.42,
+      "volume24h": "$85.48K",
+      "volume24hValue": 85480,
+      "liquidityFull": {
+        "liquidity": "438.76K",
+        "buy": "1.11K",
+        "sell": "309"
+      },
+      "liquidity": "438.76K",
+      "buyPressure": "1.11K",
+      "sellPressure": "309",
+      "holders": "5K",
+      "age": "1mo"
+    },
+    {
+      "token": "GIGGLES",
+      "tokenName": "Giggles",
+      "tradeCA": "TRADE",
+      "price": "$0.002486",
+      "marketCap": "$2.48M",
+      "marketCapValue": 2480000,
+      "change30m": "↑2.06%",
+      "change24h": "↑38.82%",
+      "change24hValue": 38.82,
+      "volume24h": "$115.91K",
+      "volume24hValue": 115910,
+      "liquidityFull": {
+        "liquidity": "297.28K",
+        "buy": "175",
+        "sell": "125"
+      },
+      "liquidity": "297.28K",
+      "buyPressure": "175",
+      "sellPressure": "125",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "BUDDY",
+      "tokenName": "CreatorBuddy",
+      "tradeCA": "TRADE",
+      "price": "$0.002228",
+      "marketCap": "$2.23M",
+      "marketCapValue": 2230000,
+      "change30m": "↑1.87%",
+      "change24h": "↓8.97%",
+      "change24hValue": 8.97,
+      "volume24h": "$146.12K",
+      "volume24hValue": 146120,
+      "liquidityFull": {
+        "liquidity": "284.95K",
+        "buy": "251",
+        "sell": "251"
+      },
+      "liquidity": "284.95K",
+      "buyPressure": "251",
+      "sellPressure": "251",
+      "holders": "4K",
+      "age": "1mo"
+    },
+    {
+      "token": "GOONC",
+      "tokenName": "gooncoin",
+      "tradeCA": "TRADE",
+      "price": "$0.002191",
+      "marketCap": "$2.17M",
+      "marketCapValue": 2170000,
+      "change30m": "↑8.97%",
+      "change24h": "↓9.50%",
+      "change24hValue": 9.5,
+      "volume24h": "$232.98K",
+      "volume24hValue": 232980,
+      "liquidityFull": {
+        "liquidity": "397.09K",
+        "buy": "771",
+        "sell": "542"
+      },
+      "liquidity": "397.09K",
+      "buyPressure": "771",
+      "sellPressure": "542",
+      "holders": "7K",
+      "age": "1mo"
+    },
+    {
+      "token": "FINNA",
+      "tokenName": "Finna AI",
+      "tradeCA": "TRADE",
+      "price": "$0.001755",
+      "marketCap": "$1.75M",
+      "marketCapValue": 1750000,
+      "change30m": "↑8.42%",
+      "change24h": "↓17.87%",
+      "change24hValue": 17.87,
+      "volume24h": "$244.71K",
+      "volume24hValue": 244710,
+      "liquidityFull": {
+        "liquidity": "287.02K",
+        "buy": "819",
+        "sell": "584"
+      },
+      "liquidity": "287.02K",
+      "buyPressure": "819",
+      "sellPressure": "584",
+      "holders": "2K",
+      "age": "5d"
+    },
+    {
+      "token": "SUBY",
+      "tokenName": "Suby",
+      "tradeCA": "TRADE",
+      "price": "$0.001645",
+      "marketCap": "$1.65M",
+      "marketCapValue": 1650000,
+      "change30m": "↓7.21%",
+      "change24h": "↓37.70%",
+      "change24hValue": 37.7,
+      "volume24h": "$342.29K",
+      "volume24hValue": 342290,
+      "liquidityFull": {
+        "liquidity": "237.61K",
+        "buy": "507",
+        "sell": "312"
+      },
+      "liquidity": "237.61K",
+      "buyPressure": "507",
+      "sellPressure": "312",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "DTR",
+      "tokenName": "dextoro",
+      "tradeCA": "TRADE",
+      "price": "$0.001570",
+      "marketCap": "$1.57M",
+      "marketCapValue": 1570000,
+      "change30m": "↓1.11%",
+      "change24h": "↓16.80%",
+      "change24hValue": 16.8,
+      "volume24h": "$170.56K",
+      "volume24hValue": 170560,
+      "liquidityFull": {
+        "liquidity": "394.05K",
+        "buy": "996",
+        "sell": "957"
+      },
+      "liquidity": "394.05K",
+      "buyPressure": "996",
+      "sellPressure": "957",
+      "holders": "3K",
+      "age": "2w"
+    },
+    {
+      "token": "RIP VC",
+      "tokenName": "RIP VC",
+      "tradeCA": "TRADE",
+      "price": "$0.001525",
+      "marketCap": "$1.41M",
+      "marketCapValue": 1410000,
+      "change30m": "↓4.69%",
+      "change24h": "↓2.86%",
+      "change24hValue": 2.86,
+      "volume24h": "$36.53K",
+      "volume24hValue": 36530,
+      "liquidityFull": {
+        "liquidity": "347.99K",
+        "buy": "56",
+        "sell": "70"
+      },
+      "liquidity": "347.99K",
+      "buyPressure": "56",
+      "sellPressure": "70",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "RUNNIT",
+      "tokenName": "Runnit",
+      "tradeCA": "TRADE",
+      "price": "$0.001339",
+      "marketCap": "$1.33M",
+      "marketCapValue": 1330000,
+      "change30m": "↑3.64%",
+      "change24h": "↑5.04%",
+      "change24hValue": 5.04,
+      "volume24h": "$164.21K",
+      "volume24hValue": 164210,
+      "liquidityFull": {
+        "liquidity": "290.58K",
+        "buy": "794",
+        "sell": "487"
+      },
+      "liquidity": "290.58K",
+      "buyPressure": "794",
+      "sellPressure": "487",
+      "holders": "2K",
+      "age": "2w"
+    },
+    {
+      "token": "NEXUS",
+      "tokenName": "NEXUS",
+      "tradeCA": "TRADE",
+      "price": "$0.001204",
+      "marketCap": "$1.20M",
+      "marketCapValue": 1200000,
+      "change30m": "↑2.10%",
+      "change24h": "↓29.67%",
+      "change24hValue": 29.67,
+      "volume24h": "$2.89M",
+      "volume24hValue": 2890000,
+      "liquidityFull": {
+        "liquidity": "344.07K",
+        "buy": "7.58K",
+        "sell": "7.32K"
+      },
+      "liquidity": "344.07K",
+      "buyPressure": "7.58K",
+      "sellPressure": "7.32K",
+      "holders": "2K",
+      "age": "1d"
+    },
+    {
+      "token": "PNP",
+      "tokenName": "PNP Exchange",
+      "tradeCA": "TRADE",
+      "price": "$0.001117",
+      "marketCap": "$1.08M",
+      "marketCapValue": 1080000,
+      "change30m": "↑0.34%",
+      "change24h": "↓9.11%",
+      "change24hValue": 9.11,
+      "volume24h": "$20.41K",
+      "volume24hValue": 20410,
+      "liquidityFull": {
+        "liquidity": "175.98K",
+        "buy": "23",
+        "sell": "44"
+      },
+      "liquidity": "175.98K",
+      "buyPressure": "23",
+      "sellPressure": "44",
+      "holders": "759",
+      "age": "1mo"
+    },
+    {
+      "token": "ZEUZ",
+      "tokenName": "Zeuz",
+      "tradeCA": "TRADE",
+      "price": "$0.001074",
+      "marketCap": "$1.07M",
+      "marketCapValue": 1070000,
+      "change30m": "↑1.19%",
+      "change24h": "↓15.13%",
+      "change24hValue": 15.13,
+      "volume24h": "$72.53K",
+      "volume24hValue": 72530,
+      "liquidityFull": {
+        "liquidity": "207.91K",
+        "buy": "127",
+        "sell": "141"
+      },
+      "liquidity": "207.91K",
+      "buyPressure": "127",
+      "sellPressure": "141",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "PROMPT",
+      "tokenName": "promptbidder",
+      "tradeCA": "TRADE",
+      "price": "$0.001072",
+      "marketCap": "$1.07M",
+      "marketCapValue": 1070000,
+      "change30m": "↑2.80%",
+      "change24h": "↓7.59%",
+      "change24hValue": 7.59,
+      "volume24h": "$74.71K",
+      "volume24hValue": 74710,
+      "liquidityFull": {
+        "liquidity": "209.65K",
+        "buy": "206",
+        "sell": "189"
+      },
+      "liquidity": "209.65K",
+      "buyPressure": "206",
+      "sellPressure": "189",
+      "holders": "3K",
+      "age": "1mo"
+    },
+    {
+      "token": "JTVO",
+      "tokenName": "Jatevo",
+      "tradeCA": "TRADE",
+      "price": "$0.001018",
+      "marketCap": "$1.02M",
+      "marketCapValue": 1020000,
+      "change30m": "↑5.86%",
+      "change24h": "↓9.94%",
+      "change24hValue": 9.94,
+      "volume24h": "$156.99K",
+      "volume24hValue": 156990,
+      "liquidityFull": {
+        "liquidity": "258.07K",
+        "buy": "603",
+        "sell": "534"
+      },
+      "liquidity": "258.07K",
+      "buyPressure": "603",
+      "sellPressure": "534",
+      "holders": "2K",
+      "age": "3w"
+    },
+    {
+      "token": "HYLX",
+      "tokenName": "HyperSwapAI",
+      "tradeCA": "TRADE",
+      "price": "$0.000982",
+      "marketCap": "$982.22K",
+      "marketCapValue": 982220,
+      "change30m": "↓1.09%",
+      "change24h": "↓15.47%",
+      "change24hValue": 15.47,
+      "volume24h": "$51.82K",
+      "volume24hValue": 51820,
+      "liquidityFull": {
+        "liquidity": "184.28K",
+        "buy": "162",
+        "sell": "165"
+      },
+      "liquidity": "184.28K",
+      "buyPressure": "162",
+      "sellPressure": "165",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "AIXBC",
+      "tokenName": "AixBC",
+      "tradeCA": "TRADE",
+      "price": "$0.000960",
+      "marketCap": "$959.69K",
+      "marketCapValue": 959690,
+      "change30m": "↑2.02%",
+      "change24h": "↓8.04%",
+      "change24hValue": 8.04,
+      "volume24h": "$47.82K",
+      "volume24hValue": 47820,
+      "liquidityFull": {
+        "liquidity": "247.16K",
+        "buy": "96",
+        "sell": "81"
+      },
+      "liquidity": "247.16K",
+      "buyPressure": "96",
+      "sellPressure": "81",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "WONDER",
+      "tokenName": "Wonder Sites",
+      "tradeCA": "TRADE",
+      "price": "$0.000970",
+      "marketCap": "$942.51K",
+      "marketCapValue": 942510,
+      "change30m": "↑7.70%",
+      "change24h": "↓7.34%",
+      "change24hValue": 7.34,
+      "volume24h": "$100.43K",
+      "volume24hValue": 100430,
+      "liquidityFull": {
+        "liquidity": "182.35K",
+        "buy": "312",
+        "sell": "212"
+      },
+      "liquidity": "182.35K",
+      "buyPressure": "312",
+      "sellPressure": "212",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "GLMPS",
+      "tokenName": "glympse",
+      "tradeCA": "TRADE",
+      "price": "$0.000719",
+      "marketCap": "$719.41K",
+      "marketCapValue": 719410,
+      "change30m": "↓2.75%",
+      "change24h": "↓31.11%",
+      "change24hValue": 31.11,
+      "volume24h": "$46.83K",
+      "volume24hValue": 46830,
+      "liquidityFull": {
+        "liquidity": "171.63K",
+        "buy": "161",
+        "sell": "215"
+      },
+      "liquidity": "171.63K",
+      "buyPressure": "161",
+      "sellPressure": "215",
+      "holders": "3K",
+      "age": "1mo"
+    },
+    {
+      "token": "BEU",
+      "tokenName": "Believe University",
+      "tradeCA": "TRADE",
+      "price": "$0.000676",
+      "marketCap": "$675.61K",
+      "marketCapValue": 675610,
+      "change30m": "↓0.24%",
+      "change24h": "↓11.96%",
+      "change24hValue": 11.96,
+      "volume24h": "$115.11K",
+      "volume24hValue": 115110,
+      "liquidityFull": {
+        "liquidity": "226.37K",
+        "buy": "332",
+        "sell": "299"
+      },
+      "liquidity": "226.37K",
+      "buyPressure": "332",
+      "sellPressure": "299",
+      "holders": "2K",
+      "age": "3w"
+    },
+    {
+      "token": "AVO",
+      "tokenName": "avo",
+      "tradeCA": "TRADE",
+      "price": "$0.000663",
+      "marketCap": "$663.04K",
+      "marketCapValue": 663040,
+      "change30m": "↓3.31%",
+      "change24h": "↓9.12%",
+      "change24hValue": 9.12,
+      "volume24h": "$87.29K",
+      "volume24hValue": 87290,
+      "liquidityFull": {
+        "liquidity": "274.67K",
+        "buy": "396",
+        "sell": "393"
+      },
+      "liquidity": "274.67K",
+      "buyPressure": "396",
+      "sellPressure": "393",
+      "holders": "3K",
+      "age": "3w"
+    },
+    {
+      "token": "SANA",
+      "tokenName": "Sanafi Onchain",
+      "tradeCA": "TRADE",
+      "price": "$0.000642",
+      "marketCap": "$641.32K",
+      "marketCapValue": 641320,
+      "change30m": "↓14.18%",
+      "change24h": "↑7.79%",
+      "change24hValue": 7.79,
+      "volume24h": "$100.26K",
+      "volume24hValue": 100260,
+      "liquidityFull": {
+        "liquidity": "190.64K",
+        "buy": "339",
+        "sell": "192"
+      },
+      "liquidity": "190.64K",
+      "buyPressure": "339",
+      "sellPressure": "192",
+      "holders": "755",
+      "age": "3w"
+    },
+    {
+      "token": "TWEETDM",
+      "tokenName": "TWEETDM",
+      "tradeCA": "TRADE",
+      "price": "$0.000634",
+      "marketCap": "$634.29K",
+      "marketCapValue": 634290,
+      "change30m": "↑4.16%",
+      "change24h": "↑2.80%",
+      "change24hValue": 2.8,
+      "volume24h": "$12.03K",
+      "volume24hValue": 12030,
+      "liquidityFull": {
+        "liquidity": "231.44K",
+        "buy": "20",
+        "sell": "37"
+      },
+      "liquidity": "231.44K",
+      "buyPressure": "20",
+      "sellPressure": "37",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "SMRT",
+      "tokenName": "SmartPractice",
+      "tradeCA": "TRADE",
+      "price": "$0.000601",
+      "marketCap": "$600.54K",
+      "marketCapValue": 600540,
+      "change30m": "↓2.23%",
+      "change24h": "↑20.50%",
+      "change24hValue": 20.5,
+      "volume24h": "$89.97K",
+      "volume24hValue": 89970,
+      "liquidityFull": {
+        "liquidity": "149.07K",
+        "buy": "280",
+        "sell": "151"
+      },
+      "liquidity": "149.07K",
+      "buyPressure": "280",
+      "sellPressure": "151",
+      "holders": "382",
+      "age": "3w"
+    },
+    {
+      "token": "NOODLE",
+      "tokenName": "Noodle",
+      "tradeCA": "TRADE",
+      "price": "$0.000550",
+      "marketCap": "$549.62K",
+      "marketCapValue": 549620,
+      "change30m": "↓4.34%",
+      "change24h": "↓16.70%",
+      "change24hValue": 16.7,
+      "volume24h": "$42.71K",
+      "volume24hValue": 42710,
+      "liquidityFull": {
+        "liquidity": "153.59K",
+        "buy": "131",
+        "sell": "118"
+      },
+      "liquidity": "153.59K",
+      "buyPressure": "131",
+      "sellPressure": "118",
+      "holders": "5K",
+      "age": "1mo"
+    },
+    {
+      "token": "YOURSELF",
+      "tokenName": "Yourself",
+      "tradeCA": "TRADE",
+      "price": "$0.000537",
+      "marketCap": "$537.14K",
+      "marketCapValue": 537140,
+      "change30m": "↑6.70%",
+      "change24h": "↓26.06%",
+      "change24hValue": 26.06,
+      "volume24h": "$181.39K",
+      "volume24hValue": 181390,
+      "liquidityFull": {
+        "liquidity": "234.42K",
+        "buy": "573",
+        "sell": "653"
+      },
+      "liquidity": "234.42K",
+      "buyPressure": "573",
+      "sellPressure": "653",
+      "holders": "2K",
+      "age": "5d"
+    },
+    {
+      "token": "SLSH",
+      "tokenName": "SLESH",
+      "tradeCA": "TRADE",
+      "price": "$0.000498",
+      "marketCap": "$497.84K",
+      "marketCapValue": 497840,
+      "change30m": "↑1.06%",
+      "change24h": "↓17.69%",
+      "change24hValue": 17.69,
+      "volume24h": "$33.50K",
+      "volume24hValue": 33500,
+      "liquidityFull": {
+        "liquidity": "181.61K",
+        "buy": "89",
+        "sell": "52"
+      },
+      "liquidity": "181.61K",
+      "buyPressure": "89",
+      "sellPressure": "52",
+      "holders": "740",
+      "age": "4w"
+    },
+    {
+      "token": "MECO",
+      "tokenName": "Meco Travel",
+      "tradeCA": "TRADE",
+      "price": "$0.000453",
+      "marketCap": "$453.32K",
+      "marketCapValue": 453320,
+      "change30m": "↑0.00%",
+      "change24h": "↑3.39%",
+      "change24hValue": 3.39,
+      "volume24h": "$1K",
+      "volume24hValue": 1000,
+      "liquidityFull": {
+        "liquidity": "125.43K",
+        "buy": "18",
+        "sell": "5"
+      },
+      "liquidity": "125.43K",
+      "buyPressure": "18",
+      "sellPressure": "5",
+      "holders": "269",
+      "age": "1mo"
+    },
+    {
+      "token": "COPY",
+      "tokenName": "copy trades",
+      "tradeCA": "TRADE",
+      "price": "$0.000417",
+      "marketCap": "$416.56K",
+      "marketCapValue": 416560,
+      "change30m": "↓0.22%",
+      "change24h": "↓3.85%",
+      "change24hValue": 3.85,
+      "volume24h": "$37.74K",
+      "volume24hValue": 37740,
+      "liquidityFull": {
+        "liquidity": "130.37K",
+        "buy": "64",
+        "sell": "61"
+      },
+      "liquidity": "130.37K",
+      "buyPressure": "64",
+      "sellPressure": "61",
+      "holders": "550",
+      "age": "1mo"
+    },
+    {
+      "token": "CREATOR",
+      "tokenName": "creatorgen",
+      "tradeCA": "TRADE",
+      "price": "$0.000391",
+      "marketCap": "$390.65K",
+      "marketCapValue": 390650,
+      "change30m": "↓6.01%",
+      "change24h": "↓0.76%",
+      "change24hValue": 0.76,
+      "volume24h": "$21.57K",
+      "volume24hValue": 21570,
+      "liquidityFull": {
+        "liquidity": "108.60K",
+        "buy": "36",
+        "sell": "42"
+      },
+      "liquidity": "108.60K",
+      "buyPressure": "36",
+      "sellPressure": "42",
+      "holders": "854",
+      "age": "1mo"
+    },
+    {
+      "token": "THERANOS",
+      "tokenName": "Theranos",
+      "tradeCA": "TRADE",
+      "price": "$0.000344",
+      "marketCap": "$341.74K",
+      "marketCapValue": 341740,
+      "change30m": "↓0.10%",
+      "change24h": "↓18.79%",
+      "change24hValue": 18.79,
+      "volume24h": "$28.25K",
+      "volume24hValue": 28250,
+      "liquidityFull": {
+        "liquidity": "106.30K",
+        "buy": "73",
+        "sell": "48"
+      },
+      "liquidity": "106.30K",
+      "buyPressure": "73",
+      "sellPressure": "48",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "PIPEIQ",
+      "tokenName": "PipeIQ",
+      "tradeCA": "TRADE",
+      "price": "$0.000341",
+      "marketCap": "$340.96K",
+      "marketCapValue": 340960,
+      "change30m": "↓0.33%",
+      "change24h": "↓23.98%",
+      "change24hValue": 23.98,
+      "volume24h": "$18.44K",
+      "volume24hValue": 18440,
+      "liquidityFull": {
+        "liquidity": "107.04K",
+        "buy": "36",
+        "sell": "51"
+      },
+      "liquidity": "107.04K",
+      "buyPressure": "36",
+      "sellPressure": "51",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "AVIE",
+      "tokenName": "AVIE Streaming",
+      "tradeCA": "TRADE",
+      "price": "$0.000337",
+      "marketCap": "$336.87K",
+      "marketCapValue": 336870,
+      "change30m": "↑4.98%",
+      "change24h": "↓19.31%",
+      "change24hValue": 19.31,
+      "volume24h": "$12.52K",
+      "volume24hValue": 12520,
+      "liquidityFull": {
+        "liquidity": "119.79K",
+        "buy": "48",
+        "sell": "34"
+      },
+      "liquidity": "119.79K",
+      "buyPressure": "48",
+      "sellPressure": "34",
+      "holders": "683",
+      "age": "2w"
+    },
+    {
+      "token": "XCCOM",
+      "tokenName": "XCCOM",
+      "tradeCA": "TRADE",
+      "price": "$0.000335",
+      "marketCap": "$335.47K",
+      "marketCapValue": 335470,
+      "change30m": "↓1.92%",
+      "change24h": "↓3.58%",
+      "change24hValue": 3.58,
+      "volume24h": "$1.60K",
+      "volume24hValue": 1600,
+      "liquidityFull": {
+        "liquidity": "103.16K",
+        "buy": "5",
+        "sell": "12"
+      },
+      "liquidity": "103.16K",
+      "buyPressure": "5",
+      "sellPressure": "12",
+      "holders": "807",
+      "age": "1mo"
+    },
+    {
+      "token": "SUPFRIEND",
+      "tokenName": "SuperFriend",
+      "tradeCA": "TRADE",
+      "price": "$0.000334",
+      "marketCap": "$334.24K",
+      "marketCapValue": 334240,
+      "change30m": "↓3.53%",
+      "change24h": "↑3.07%",
+      "change24hValue": 3.07,
+      "volume24h": "$11.23K",
+      "volume24hValue": 11230,
+      "liquidityFull": {
+        "liquidity": "98.29K",
+        "buy": "41",
+        "sell": "49"
+      },
+      "liquidity": "98.29K",
+      "buyPressure": "41",
+      "sellPressure": "49",
+      "holders": "2K",
+      "age": "1mo"
+    },
+    {
+      "token": "BRIX",
+      "tokenName": "BRIXJOINBRIXCOM",
+      "tradeCA": "TRADE",
+      "price": "$0.000326",
+      "marketCap": "$325.88K",
+      "marketCapValue": 325880,
+      "change30m": "↑0.00%",
+      "change24h": "↑4.82%",
+      "change24hValue": 4.82,
+      "volume24h": "$16.77K",
+      "volume24hValue": 16770,
+      "liquidityFull": {
+        "liquidity": "166.07K",
+        "buy": "20",
+        "sell": "29"
+      },
+      "liquidity": "166.07K",
+      "buyPressure": "20",
+      "sellPressure": "29",
+      "holders": "1K",
+      "age": "4w"
+    },
+    {
+      "token": "HINT",
+      "tokenName": "Hinted Data",
+      "tradeCA": "TRADE",
+      "price": "$0.000432",
+      "marketCap": "$320.22K",
+      "marketCapValue": 320220,
+      "change30m": "↓0.28%",
+      "change24h": "↓17.18%",
+      "change24hValue": 17.18,
+      "volume24h": "$24.31K",
+      "volume24hValue": 24310,
+      "liquidityFull": {
+        "liquidity": "153.87K",
+        "buy": "29",
+        "sell": "46"
+      },
+      "liquidity": "153.87K",
+      "buyPressure": "29",
+      "sellPressure": "46",
+      "holders": "448",
+      "age": "2w"
+    },
+    {
+      "token": "BUMP",
+      "tokenName": "Bump Apps",
+      "tradeCA": "TRADE",
+      "price": "$0.000313",
+      "marketCap": "$312.50K",
+      "marketCapValue": 312500,
+      "change30m": "↑0.00%",
+      "change24h": "↓13.40%",
+      "change24hValue": 13.4,
+      "volume24h": "$9.44K",
+      "volume24hValue": 9440,
+      "liquidityFull": {
+        "liquidity": "100.25K",
+        "buy": "17",
+        "sell": "36"
+      },
+      "liquidity": "100.25K",
+      "buyPressure": "17",
+      "sellPressure": "36",
+      "holders": "3K",
+      "age": "1mo"
+    },
+    {
+      "token": "IKON",
+      "tokenName": "Ikonshop",
+      "tradeCA": "TRADE",
+      "price": "$0.000312",
+      "marketCap": "$311.71K",
+      "marketCapValue": 311710,
+      "change30m": "↑6.08%",
+      "change24h": "↓30.39%",
+      "change24hValue": 30.39,
+      "volume24h": "$85.75K",
+      "volume24hValue": 85750,
+      "liquidityFull": {
+        "liquidity": "148.83K",
+        "buy": "284",
+        "sell": "299"
+      },
+      "liquidity": "148.83K",
+      "buyPressure": "284",
+      "sellPressure": "299",
+      "holders": "986",
+      "age": "1w"
+    },
+    {
+      "token": "WOM",
+      "tokenName": "Word Of Mouth",
+      "tradeCA": "TRADE",
+      "price": "$0.000312",
+      "marketCap": "$311.01K",
+      "marketCapValue": 311010,
+      "change30m": "↑13.02%",
+      "change24h": "↑23.39%",
+      "change24hValue": 23.39,
+      "volume24h": "$67.34K",
+      "volume24hValue": 67340,
+      "liquidityFull": {
+        "liquidity": "125.89K",
+        "buy": "216",
+        "sell": "174"
+      },
+      "liquidity": "125.89K",
+      "buyPressure": "216",
+      "sellPressure": "174",
+      "holders": "974",
+      "age": "2w"
+    },
+    {
+      "token": "BANNED",
+      "tokenName": "BANNED",
+      "tradeCA": "TRADE",
+      "price": "$0.000293",
+      "marketCap": "$293.33K",
+      "marketCapValue": 293330,
+      "change30m": "↓0.32%",
+      "change24h": "↓0.10%",
+      "change24hValue": 0.1,
+      "volume24h": "$25.30K",
+      "volume24hValue": 25300,
+      "liquidityFull": {
+        "liquidity": "92.64K",
+        "buy": "52",
+        "sell": "50"
+      },
+      "liquidity": "92.64K",
+      "buyPressure": "52",
+      "sellPressure": "50",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "CRYPTOGYM",
+      "tokenName": "CryptoGym",
+      "tradeCA": "TRADE",
+      "price": "$0.000283",
+      "marketCap": "$283.24K",
+      "marketCapValue": 283240,
+      "change30m": "↑9.56%",
+      "change24h": "↑10.64%",
+      "change24hValue": 10.64,
+      "volume24h": "$16.81K",
+      "volume24hValue": 16810,
+      "liquidityFull": {
+        "liquidity": "87.17K",
+        "buy": "9",
+        "sell": "23"
+      },
+      "liquidity": "87.17K",
+      "buyPressure": "9",
+      "sellPressure": "23",
+      "holders": "612",
+      "age": "1mo"
+    },
+    {
+      "token": "AURA",
+      "tokenName": "Aurascope",
+      "tradeCA": "TRADE",
+      "price": "$0.000263",
+      "marketCap": "$263.27K",
+      "marketCapValue": 263270,
+      "change30m": "↑0.27%",
+      "change24h": "↑6.21%",
+      "change24hValue": 6.21,
+      "volume24h": "$37.31K",
+      "volume24hValue": 37310,
+      "liquidityFull": {
+        "liquidity": "85.75K",
+        "buy": "103",
+        "sell": "91"
+      },
+      "liquidity": "85.75K",
+      "buyPressure": "103",
+      "sellPressure": "91",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "YLD",
+      "tokenName": "yld_fun",
+      "tradeCA": "TRADE",
+      "price": "$0.000261",
+      "marketCap": "$260.73K",
+      "marketCapValue": 260730.00000000003,
+      "change30m": "↑0.00%",
+      "change24h": "↓19.33%",
+      "change24hValue": 19.33,
+      "volume24h": "$20.67K",
+      "volume24hValue": 20670,
+      "liquidityFull": {
+        "liquidity": "134.20K",
+        "buy": "31",
+        "sell": "57"
+      },
+      "liquidity": "134.20K",
+      "buyPressure": "31",
+      "sellPressure": "57",
+      "holders": "831",
+      "age": "3w"
+    },
+    {
+      "token": "TICKERON",
+      "tokenName": "TICKERON",
+      "tradeCA": "TRADE",
+      "price": "$0.000290",
+      "marketCap": "$254.04K",
+      "marketCapValue": 254040,
+      "change30m": "↑0.58%",
+      "change24h": "↓15.29%",
+      "change24hValue": 15.29,
+      "volume24h": "$15.45K",
+      "volume24hValue": 15450,
+      "liquidityFull": {
+        "liquidity": "98.62K",
+        "buy": "44",
+        "sell": "29"
+      },
+      "liquidity": "98.62K",
+      "buyPressure": "44",
+      "sellPressure": "29",
+      "holders": "762",
+      "age": "1mo"
+    },
+    {
+      "token": "PM",
+      "tokenName": "Polymtrade",
+      "tradeCA": "TRADE",
+      "price": "$0.000235",
+      "marketCap": "$235.23K",
+      "marketCapValue": 235230,
+      "change30m": "↓16.48%",
+      "change24h": "↓21.28%",
+      "change24hValue": 21.28,
+      "volume24h": "$65.98K",
+      "volume24hValue": 65980,
+      "liquidityFull": {
+        "liquidity": "138.65K",
+        "buy": "403",
+        "sell": "332"
+      },
+      "liquidity": "138.65K",
+      "buyPressure": "403",
+      "sellPressure": "332",
+      "holders": "1K",
+      "age": "2w"
+    },
+    {
+      "token": "FDRY",
+      "tokenName": "Foundry",
+      "tradeCA": "TRADE",
+      "price": "$0.000227",
+      "marketCap": "$226.95K",
+      "marketCapValue": 226950,
+      "change30m": "↑1.58%",
+      "change24h": "↑8.89%",
+      "change24hValue": 8.89,
+      "volume24h": "$3.51K",
+      "volume24hValue": 3510,
+      "liquidityFull": {
+        "liquidity": "105.28K",
+        "buy": "16",
+        "sell": "15"
+      },
+      "liquidity": "105.28K",
+      "buyPressure": "16",
+      "sellPressure": "15",
+      "holders": "605",
+      "age": "3w"
+    },
+    {
+      "token": "ONEZEROS",
+      "tokenName": "ONEANDZEROS",
+      "tradeCA": "TRADE",
+      "price": "$0.000231",
+      "marketCap": "$222.96K",
+      "marketCapValue": 222960,
+      "change30m": "↑2.21%",
+      "change24h": "↑30.85%",
+      "change24hValue": 30.85,
+      "volume24h": "$9.62K",
+      "volume24hValue": 9620,
+      "liquidityFull": {
+        "liquidity": "100.68K",
+        "buy": "21",
+        "sell": "19"
+      },
+      "liquidity": "100.68K",
+      "buyPressure": "21",
+      "sellPressure": "19",
+      "holders": "770",
+      "age": "1mo"
+    },
+    {
+      "token": "DASHC",
+      "tokenName": "Dashcoin",
+      "tradeCA": "TRADE",
+      "price": "$0.000223",
+      "marketCap": "$222.91K",
+      "marketCapValue": 222910,
+      "change30m": "↑0.00%",
+      "change24h": "↓4.75%",
+      "change24hValue": 4.75,
+      "volume24h": "$2.50K",
+      "volume24hValue": 2500,
+      "liquidityFull": {
+        "liquidity": "87.28K",
+        "buy": "9",
+        "sell": "11"
+      },
+      "liquidity": "87.28K",
+      "buyPressure": "9",
+      "sellPressure": "11",
+      "holders": "479",
+      "age": "1mo"
+    },
+    {
+      "token": "GPTW",
+      "tokenName": "GPT Workspace",
+      "tradeCA": "TRADE",
+      "price": "$0.000208",
+      "marketCap": "$208.37K",
+      "marketCapValue": 208370,
+      "change30m": "↑1.63%",
+      "change24h": "↓38.85%",
+      "change24hValue": 38.85,
+      "volume24h": "$19.73K",
+      "volume24hValue": 19730,
+      "liquidityFull": {
+        "liquidity": "84.44K",
+        "buy": "31",
+        "sell": "40"
+      },
+      "liquidity": "84.44K",
+      "buyPressure": "31",
+      "sellPressure": "40",
+      "holders": "982",
+      "age": "1mo"
+    },
+    {
+      "token": "MOCHI",
+      "tokenName": "Mochi Circle",
+      "tradeCA": "TRADE",
+      "price": "$0.000208",
+      "marketCap": "$207.60K",
+      "marketCapValue": 207600,
+      "change30m": "↓0.05%",
+      "change24h": "↑66.52%",
+      "change24hValue": 66.52,
+      "volume24h": "$76.64K",
+      "volume24hValue": 76640,
+      "liquidityFull": {
+        "liquidity": "107.01K",
+        "buy": "237",
+        "sell": "204"
+      },
+      "liquidity": "107.01K",
+      "buyPressure": "237",
+      "sellPressure": "204",
+      "holders": "679",
+      "age": "5d"
+    },
+    {
+      "token": "SHEDGE",
+      "tokenName": "SolHedge",
+      "tradeCA": "TRADE",
+      "price": "$0.000206",
+      "marketCap": "$206.09K",
+      "marketCapValue": 206090,
+      "change30m": "↑0.00%",
+      "change24h": "↑17.02%",
+      "change24hValue": 17.02,
+      "volume24h": "$12.52K",
+      "volume24hValue": 12520,
+      "liquidityFull": {
+        "liquidity": "108.91K",
+        "buy": "50",
+        "sell": "46"
+      },
+      "liquidity": "108.91K",
+      "buyPressure": "50",
+      "sellPressure": "46",
+      "holders": "911",
+      "age": "3w"
+    },
+    {
+      "token": "DIRA",
+      "tokenName": "AgentHub",
+      "tradeCA": "TRADE",
+      "price": "$0.000203",
+      "marketCap": "$202.34K",
+      "marketCapValue": 202340,
+      "change30m": "↓1.29%",
+      "change24h": "↓19.32%",
+      "change24hValue": 19.32,
+      "volume24h": "$24.40K",
+      "volume24hValue": 24400,
+      "liquidityFull": {
+        "liquidity": "81.63K",
+        "buy": "49",
+        "sell": "32"
+      },
+      "liquidity": "81.63K",
+      "buyPressure": "49",
+      "sellPressure": "32",
+      "holders": "934",
+      "age": "1mo"
+    },
+    {
+      "token": "BSCREENER",
+      "tokenName": "BelieveScreener",
+      "tradeCA": "TRADE",
+      "price": "$0.000202",
+      "marketCap": "$201.78K",
+      "marketCapValue": 201780,
+      "change30m": "↓2.17%",
+      "change24h": "↓0.33%",
+      "change24hValue": 0.33,
+      "volume24h": "$2.87K",
+      "volume24hValue": 2870,
+      "liquidityFull": {
+        "liquidity": "83.07K",
+        "buy": "22",
+        "sell": "23"
+      },
+      "liquidity": "83.07K",
+      "buyPressure": "22",
+      "sellPressure": "23",
+      "holders": "3K",
+      "age": "1mo"
+    },
+    {
+      "token": "HUGO",
+      "tokenName": "Hugo Learn",
+      "tradeCA": "TRADE",
+      "price": "$0.000195",
+      "marketCap": "$194.85K",
+      "marketCapValue": 194850,
+      "change30m": "↑0.00%",
+      "change24h": "↑62.53%",
+      "change24hValue": 62.53,
+      "volume24h": "$16.02K",
+      "volume24hValue": 16020,
+      "liquidityFull": {
+        "liquidity": "73.01K",
+        "buy": "38",
+        "sell": "21"
+      },
+      "liquidity": "73.01K",
+      "buyPressure": "38",
+      "sellPressure": "21",
+      "holders": "397",
+      "age": "1mo"
+    },
+    {
+      "token": "OK",
+      "tokenName": "okbet",
+      "tradeCA": "TRADE",
+      "price": "$0.000185",
+      "marketCap": "$184.91K",
+      "marketCapValue": 184910,
+      "change30m": "↓9.50%",
+      "change24h": "↑10.53%",
+      "change24hValue": 10.53,
+      "volume24h": "$41.38K",
+      "volume24hValue": 41380,
+      "liquidityFull": {
+        "liquidity": "114.72K",
+        "buy": "112",
+        "sell": "118"
+      },
+      "liquidity": "114.72K",
+      "buyPressure": "112",
+      "sellPressure": "118",
+      "holders": "554",
+      "age": "1mo"
+    },
+    {
+      "token": "UNICORN",
+      "tokenName": "Unicorn",
+      "tradeCA": "TRADE",
+      "price": "$0.000185",
+      "marketCap": "$184.65K",
+      "marketCapValue": 184650,
+      "change30m": "↓4.33%",
+      "change24h": "↓12.03%",
+      "change24hValue": 12.03,
+      "volume24h": "$27.78K",
+      "volume24hValue": 27780,
+      "liquidityFull": {
+        "liquidity": "78.26K",
+        "buy": "138",
+        "sell": "126"
+      },
+      "liquidity": "78.26K",
+      "buyPressure": "138",
+      "sellPressure": "126",
+      "holders": "3K",
+      "age": "1mo"
+    },
+    {
+      "token": "CITIES",
+      "tokenName": "NETWORKCITIES",
+      "tradeCA": "TRADE",
+      "price": "$0.000178",
+      "marketCap": "$178.25K",
+      "marketCapValue": 178250,
+      "change30m": "↑0.00%",
+      "change24h": "↓12.91%",
+      "change24hValue": 12.91,
+      "volume24h": "$5.12K",
+      "volume24hValue": 5120,
+      "liquidityFull": {
+        "liquidity": "78.09K",
+        "buy": "27",
+        "sell": "23"
+      },
+      "liquidity": "78.09K",
+      "buyPressure": "27",
+      "sellPressure": "23",
+      "holders": "681",
+      "age": "4w"
+    },
+    {
+      "token": "DEAL",
+      "tokenName": "DEAL WITH IT",
+      "tradeCA": "TRADE",
+      "price": "$0.000184",
+      "marketCap": "$178.07K",
+      "marketCapValue": 178070,
+      "change30m": "↓1.39%",
+      "change24h": "↑13.97%",
+      "change24hValue": 13.97,
+      "volume24h": "$7.69K",
+      "volume24hValue": 7690,
+      "liquidityFull": {
+        "liquidity": "143.76K",
+        "buy": "51",
+        "sell": "32"
+      },
+      "liquidity": "143.76K",
+      "buyPressure": "51",
+      "sellPressure": "32",
+      "holders": "1K",
+      "age": "3w"
+    },
+    {
+      "token": "NINJA",
+      "tokenName": "Ninjachat",
+      "tradeCA": "TRADE",
+      "price": "$0.000175",
+      "marketCap": "$175.48K",
+      "marketCapValue": 175480,
+      "change30m": "↑8.39%",
+      "change24h": "↑6.60%",
+      "change24hValue": 6.6,
+      "volume24h": "$5.05K",
+      "volume24hValue": 5050,
+      "liquidityFull": {
+        "liquidity": "64.49K",
+        "buy": "16",
+        "sell": "15"
+      },
+      "liquidity": "64.49K",
+      "buyPressure": "16",
+      "sellPressure": "15",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "C2A",
+      "tokenName": "Call 2 Action",
+      "tradeCA": "TRADE",
+      "price": "$0.000175",
+      "marketCap": "$174.82K",
+      "marketCapValue": 174820,
+      "change30m": "↓3.78%",
+      "change24h": "↓28.64%",
+      "change24hValue": 28.64,
+      "volume24h": "$40.87K",
+      "volume24hValue": 40870,
+      "liquidityFull": {
+        "liquidity": "98.09K",
+        "buy": "90",
+        "sell": "83"
+      },
+      "liquidity": "98.09K",
+      "buyPressure": "90",
+      "sellPressure": "83",
+      "holders": "569",
+      "age": "1w"
+    },
+    {
+      "token": "APES",
+      "tokenName": "PRIMEAPE",
+      "tradeCA": "TRADE",
+      "price": "$0.000170",
+      "marketCap": "$170.24K",
+      "marketCapValue": 170240,
+      "change30m": "↓4.16%",
+      "change24h": "↑1.92%",
+      "change24hValue": 1.92,
+      "volume24h": "$12.55K",
+      "volume24hValue": 12550,
+      "liquidityFull": {
+        "liquidity": "73.71K",
+        "buy": "25",
+        "sell": "20"
+      },
+      "liquidity": "73.71K",
+      "buyPressure": "25",
+      "sellPressure": "20",
+      "holders": "454",
+      "age": "1mo"
+    },
+    {
+      "token": "REPLY",
+      "tokenName": "ReplyGuys",
+      "tradeCA": "TRADE",
+      "price": "$0.000174",
+      "marketCap": "$169.09K",
+      "marketCapValue": 169090,
+      "change30m": "↑0.66%",
+      "change24h": "↑7.55%",
+      "change24hValue": 7.55,
+      "volume24h": "$1.80K",
+      "volume24hValue": 1800,
+      "liquidityFull": {
+        "liquidity": "77.03K",
+        "buy": "24",
+        "sell": "8"
+      },
+      "liquidity": "77.03K",
+      "buyPressure": "24",
+      "sellPressure": "8",
+      "holders": "1K",
+      "age": "1mo"
+    },
+    {
+      "token": "CRACK",
+      "tokenName": "CRACKFUN",
+      "tradeCA": "TRADE",
+      "price": "$0.000168",
+      "marketCap": "$168.46K",
+      "marketCapValue": 168460,
+      "change30m": "↑0.00%",
+      "change24h": "↓11.66%",
+      "change24hValue": 11.66,
+      "volume24h": "$5.84K",
+      "volume24hValue": 5840,
+      "liquidityFull": {
+        "liquidity": "116.10K",
+        "buy": "8",
+        "sell": "15"
+      },
+      "liquidity": "116.10K",
+      "buyPressure": "8",
+      "sellPressure": "15",
+      "holders": "926",
+      "age": "4w"
+    },
+    {
+      "token": "BLOCK",
+      "tokenName": "BlockHaven RPC",
+      "tradeCA": "TRADE",
+      "price": "$0.000167",
+      "marketCap": "$166.97K",
+      "marketCapValue": 166970,
+      "change30m": "↑0.00%",
+      "change24h": "↓0.98%",
+      "change24hValue": 0.98,
+      "volume24h": "$2.87K",
+      "volume24hValue": 2870,
+      "liquidityFull": {
+        "liquidity": "85.58K",
+        "buy": "6",
+        "sell": "12"
+      },
+      "liquidity": "85.58K",
+      "buyPressure": "6",
+      "sellPressure": "12",
+      "holders": "305",
+      "age": "1mo"
+    },
+    {
+      "token": "TAXY",
+      "tokenName": "NEW",
+      "tradeCA": "TRADE",
+      "price": "$0.000167",
+      "marketCap": "$166.64K",
+      "marketCapValue": 166640,
+      "change30m": "↑5.95%",
+      "change24h": "↑99.78%",
+      "change24hValue": 99.78,
+      "volume24h": "$3.51M",
+      "volume24hValue": 3510000,
+      "liquidityFull": {
+        "liquidity": "187.12K",
+        "buy": "11.99K",
+        "sell": "9.41K"
+      },
+      "liquidity": "187.12K",
+      "buyPressure": "11.99K",
+      "sellPressure": "9.41K",
+      "holders": "787",
+      "age": "15h"
+    },
+    {
+      "token": "CLOON",
+      "tokenName": "CLOON",
+      "tradeCA": "TRADE",
+      "price": "$0.000165",
+      "marketCap": "$165.21K",
+      "marketCapValue": 165210,
+      "change30m": "↑0.00%",
+      "change24h": "↓0.38%",
+      "change24hValue": 0.38,
+      "volume24h": "$1.66K",
+      "volume24hValue": 1660,
+      "liquidityFull": {
+        "liquidity": "136.97K",
+        "buy": "4",
+        "sell": "14"
+      },
+      "liquidity": "136.97K",
+      "buyPressure": "4",
+      "sellPressure": "14",
+      "holders": "1K",
+      "age": "1mo"
+    }
+  ],
+  "newLaunchData": [
+    {
+      "token": {
+        "symbol": "GMX",
+        "name": "Gamex"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "DGG9...kBLV",
+        "tradeLink": "https://axiom.trade/t/DGG9oUgJ7FieAWvUGtB8Pf2cWRLtrPbP9s63AeugkBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@isuryaprataap",
+        "link": "https://twitter.com/isuryaprataap"
+      },
+      "description": "This is a Gamex platform",
+      "launchTime": "1h ago"
+    },
+    {
+      "token": {
+        "symbol": "MIN",
+        "name": "Minri AI"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "DaWd...kBLV",
+        "tradeLink": "https://axiom.trade/t/DaWdcJf91jhoxRbXeEhkLjTizxwoNW9Q1BRr3F15kBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@kimberl8938282",
+        "link": "https://twitter.com/kimberl8938282"
+      },
+      "description": "Minrim AI brings real time intelligence to the Solana blockchain with predictive AI agents, live data, and seamless tool...",
+      "launchTime": "2h ago"
+    },
+    {
+      "token": {
+        "symbol": "ZIP",
+        "name": "Ziplana"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "BtZA...yBLV",
+        "tradeLink": "https://axiom.trade/t/BtZAV86UTtLWQJJd2GEwgWTPsKQLyu4GrtUSSxLnyBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@lyli46445078121",
+        "link": "https://twitter.com/lyli46445078121"
+      },
+      "description": "-",
+      "launchTime": "2h ago"
+    },
+    {
+      "token": {
+        "symbol": "BOLD",
+        "name": "BOLD MKBHD"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "7EYH...zBLV",
+        "tradeLink": "https://axiom.trade/t/7EYHjNmpWipfu2XZ5oitEL8cmiipHYUMPtMdvBKnzBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@CupOfCoffee2025",
+        "link": "https://twitter.com/CupOfCoffee2025"
+      },
+      "description": "Pure memes about promise and how to doge that",
+      "launchTime": "2h ago"
+    },
+    {
+      "token": {
+        "symbol": "3LOOP",
+        "name": "3 LOOP DECODER"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "AUMD...oBLV",
+        "tradeLink": "https://axiom.trade/t/AUMDnqAfPZHoCp4nduik8C4h7WVVPAdLMd8JJ1vjoBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@jreeve_eth",
+        "link": "https://twitter.com/jreeve_eth"
+      },
+      "description": "TS library to get human-readable transactions. Grantees \n@solana\n@gitcoin\n@optimism",
+      "launchTime": "3h ago"
+    },
+    {
+      "token": {
+        "symbol": "WING",
+        "name": "flappybtc"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "HvpN...dBLV",
+        "tradeLink": "https://axiom.trade/t/HvpNppbzeFE65CXvdfwDhDpmvzGwND9DXpivUgwfdBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@Flappy_btc",
+        "link": "https://twitter.com/Flappy_btc"
+      },
+      "description": "flappy btc game on solana",
+      "launchTime": "4h ago"
+    },
+    {
+      "token": {
+        "symbol": "CANDY",
+        "name": "Candy Crush Saga"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "7PSt...fBLV",
+        "tradeLink": "https://axiom.trade/t/7PStTknUnut69RhMJ11PkQJKYtvNha3MMWKv9UcVfBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@CrushSaga1234",
+        "link": "https://twitter.com/CrushSaga1234"
+      },
+      "description": "Start playing Candy Crush Saga today – a legendary puzzle game loved by millions of players around the world.",
+      "launchTime": "4h ago"
+    },
+    {
+      "token": {
+        "symbol": "SOLPICK",
+        "name": "solpick"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "AQKW...rBLV",
+        "tradeLink": "https://axiom.trade/t/AQKW5KBWtDN7xVnj5aM6zgmWmNKra4K8KPv9M7qjrBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@solpick_io",
+        "link": "https://twitter.com/solpick_io"
+      },
+      "description": "ASKED QUESTIONS\nWhat is solpick.io?\nSolpick.io is an Free SOL faucet that enables users the ability to earn free SOL ev...",
+      "launchTime": "4h ago"
+    },
+    {
+      "token": {
+        "symbol": "EGGPLANT",
+        "name": "EggPlant Team"
+      },
+      "curvePercentage": "12",
+      "contract": {
+        "address": "8wjm...bBLV",
+        "tradeLink": "https://axiom.trade/t/8wjmCdWpY5PibZhdgcraxFsgDe3sCThHBxZ2x9jNbBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@E1FDev",
+        "link": "https://twitter.com/E1FDev"
+      },
+      "description": "Join our $eggplant TEAM!\nWe're not just a bunch of veggie enthusiasts; we're egg-cited about eggplant recipes, egg-spert...",
+      "launchTime": "6h ago"
+    },
+    {
+      "token": {
+        "symbol": "LOCKEDIN",
+        "name": "Locked in syndrome"
+      },
+      "curvePercentage": "0",
+      "contract": {
+        "address": "26k9...vBLV",
+        "tradeLink": "https://axiom.trade/t/26k9JZEVtVqcCdom8py1hJwPcCNrfUi2AqhG6SK1vBLV/@bscreener"
+      },
+      "twitter": {
+        "handle": "@Dark_Soul_rules",
+        "link": "https://twitter.com/Dark_Soul_rules"
+      },
+      "description": "$LockedIn  Locked in syndrome",
+      "launchTime": "6h ago"
+    }
+  ]
+}

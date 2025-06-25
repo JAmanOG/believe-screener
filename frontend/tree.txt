@@ -1,0 +1,107 @@
+Folder PATH listing for volume Windows
+Volume serial number is 62B1-A708
+C:.
+�   .gitignore
+�   app.json
+�   babel.config.js
+�   eslint.config.js
+�   expo-env.d.ts
+�   global.css
+�   metro.config.js
+�   nativewind-env.d.ts
+�   package-lock.json
+�   package.json
+�   README.md
+�   tailwind.config.js
+�   tree.txt
+�   tsconfig.json
+�   
++---.expo
+�   �   devices.json
+�   �   README.md
+�   �   
+�   +---types
+�           router.d.ts
+�           
++---.vscode
+�       settings.json
+�       
++---app
+�   �   index.tsx
+�   �   _layout.tsx
+�   �   
+�   +---(tabs)
+�           favorites.tsx
+�           HomeScreen.tsx
+�           new_Launch.tsx
+�           stockdetails.tsx
+�           swap.tsx
+�           top.tsx
+�           _layout.tsx
+�           
++---app-example
+�   +---app
+�   �   �   +not-found.tsx
+�   �   �   _layout.tsx
+�   �   �   
+�   �   +---(tabs)
+�   �           explore.tsx
+�   �           index.tsx
+�   �           _layout.tsx
+�   �           
+�   +---components
+�   �   �   Collapsible.tsx
+�   �   �   ExternalLink.tsx
+�   �   �   HapticTab.tsx
+�   �   �   HelloWave.tsx
+�   �   �   ParallaxScrollView.tsx
+�   �   �   ThemedText.tsx
+�   �   �   ThemedView.tsx
+�   �   �   
+�   �   +---ui
+�   �           IconSymbol.ios.tsx
+�   �           IconSymbol.tsx
+�   �           TabBarBackground.ios.tsx
+�   �           TabBarBackground.tsx
+�   �           
+�   +---scripts
+�           reset-project.js
+�           
++---assets
+�   +---fonts
+�   �       SpaceMono-Regular.ttf
+�   �       
+�   +---images
+�           adaptive-icon.png
+�           favicon.png
+�           icon.png
+�           partial-react-logo.png
+�           react-logo.png
+�           react-logo@2x.png
+�           react-logo@3x.png
+�           splash-icon.png
+�           
++---components
+�   �   Collapsible.tsx
+�   �   ExternalLink.tsx
+�   �   HapticTab.tsx
+�   �   HelloWave.tsx
+�   �   ParallaxScrollView.tsx
+�   �   ThemedText.tsx
+�   �   ThemedView.tsx
+�   �   
+�   +---ui
+�           IconSymbol.ios.tsx
+�           IconSymbol.tsx
+�           TabBarBackground.ios.tsx
+�           TabBarBackground.tsx
+�           
++---constants
+�       Colors.ts
+�       
++---hooks
+�       useColorScheme.ts
+�       useColorScheme.web.ts
+�       useTheme.tsx
+�       useThemeColor.ts
+�       

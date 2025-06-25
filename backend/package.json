@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Enhanced BelieverScreener - AI-powered crypto token analysis",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test-apis": "node testAPIs.js",
+    "screen": "node fetchAllTokenData.js",
+    "screen-fast": "node fetchAllTokenData.js --limit=25",
+    "micro-cap": "node microCapScreenerScript.js",
+    "debug-micro": "node debugMicroCap.js",
+    "monitor": "npm run dev &; sleep 3; curl http://localhost:3000/api/dashboard"
+  },
+  "keywords": [
+    "crypto",
+    "screening",
+    "defi",
+    "analysis",
+    "chad",
+    "chadform"
+  ],
+  "author": "BelieverScreener Team",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "puppeteer": "^24.10.2",
+    "redis": "^5.5.6",
+    "socket.io": "^4.8.1"
+  }
+}
