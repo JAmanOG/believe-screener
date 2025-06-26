@@ -70,7 +70,13 @@ function filterAndFormatData(tableData, otherData) {
                 // Parse numerical values for filtering
                 const marketCapValue = parseValue(marketCap);
                 const volume24hValue = parseValue(volume24h);
-                const change24hValue = parseFloat(change24h.replace(/[↑↓%]/g, "")) || 0;
+                const change24hValue = (() => {
+                    if (!change24h) return 0;
+                    const isNegative = change24h.includes('↓');
+                    const cleaned = change24h.replace(/[↑↓%]/g, "");
+                    const value = parseFloat(cleaned) || 0;
+                    return isNegative ? -value : value;
+                })();
                 
                 // Parse liquidity info
                 const liqInfo = parseLiquidityInfo(liquidityInfo);

@@ -139,8 +139,14 @@ async function extractNewLaunchTableData(page) {
             
             // Description
             const descriptionCell = cells[4];
-            const description = descriptionCell?.querySelector('span')?.textContent?.trim() || 
-                              descriptionCell?.querySelector('.truncate')?.textContent?.trim() || '';
+            const description = descriptionCell?.querySelector('span')?.textContent?.trim() || descriptionCell?.querySelector('.truncate')?.textContent?.trim() || '';
+
+            // Image URL extraction
+            let imageUrl = '';
+            const imageElement = tokenCell?.querySelector('img');
+            if (imageElement) {
+                imageUrl = imageElement.getAttribute('src') || '';
+            }
             
             // Launch time
             const launchCell = cells[5];
@@ -151,6 +157,7 @@ async function extractNewLaunchTableData(page) {
                     symbol: tokenSymbol,
                     name: tokenName
                 },
+                imageUrl: imageUrl,
                 curvePercentage: curvePercentage,
                 contract: {
                     address: contractAddress,
@@ -319,14 +326,12 @@ export async function scrapeData() {
                         globalStats: globalStats,
                         majorCardDetails: majorCardDetails,
                         newLaunchTableData: newLaunchTableData,
-                        currentTab: currentTab
                     };
 
                     const outputPath = path.join(__dirname, "filteredDataWithOther.json");
                     const outputData = {
                         otherData: otherData,
-                        tableData: [],
-                        newLaunchData: newLaunchTableData
+                        tableData: filteredData,
                     };
                     fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
                     console.log(`New Launches data saved: ${newLaunchTableData.length} items`);
@@ -393,7 +398,6 @@ export async function scrapeData() {
                         const outputData = {
                             otherData: otherData,
                             tableData: filteredData,
-                            newLaunchData: newLaunchTableData
                         };
                         fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
                         console.log(`Filtered data with other info saved to: ${outputPath}`);

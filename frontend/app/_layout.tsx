@@ -1,7 +1,7 @@
 // import { Stack } from "expo-router";
-import '../global.css';
-import { ThemeProvider } from '@/hooks/useTheme';
-import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from "@/hooks/useTheme";
+import "../global.css";
+import { SocketProvider } from '../hooks/useSocket';
 
 // export default function RootLayout() {
 //   return (
@@ -12,12 +12,19 @@ import { NavigationContainer } from '@react-navigation/native';
 //     </ThemeProvider>
 //   );
 // }
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 
 export default function Layout() {
   return (
+    
     <ThemeProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <SocketProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="IndividualToken" options={{ headerShown: false }} />
+        </Stack>
+    </SocketProvider>
     </ThemeProvider>
+
   );
 }

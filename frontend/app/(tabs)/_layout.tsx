@@ -1,10 +1,9 @@
-import {Tabs } from "expo-router";
-import React from "react";
-import { Platform } from 'react-native';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useTheme } from '@/hooks/useTheme';
 import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/hooks/useTheme';
+import { Tabs } from "expo-router";
+import React from "react";
 
 export default function TabLayout() {
     const { theme } = useTheme();
@@ -22,9 +21,9 @@ export default function TabLayout() {
               borderTopWidth: 0,
               elevation: 0,
               shadowOpacity: 0,
-              height: 80,
-              paddingBottom: 20,
-              paddingTop: 10,
+              height: 65,
+              paddingBottom: 15,
+              paddingTop: 8,
             },
             tabBarLabelStyle: {
               fontSize: 12,
@@ -52,20 +51,7 @@ export default function TabLayout() {
               tabBarIcon: ({ color }) => <IconSymbol size={24} name="cube.box.fill" color={color} />,
             }}
           />
-          <Tabs.Screen
-            name="favorites"
-            options={{
-              title: 'Cryptos',
-              tabBarIcon: ({ color }) => <IconSymbol size={24} name="bitcoinsign.circle.fill" color={color} />,
-            }}
-          />
-          <Tabs.Screen
-            name="swap"
-            options={{
-              title: 'Swap',
-              tabBarIcon: ({ color }) => <IconSymbol size={24} name="arrow.left.arrow.right" color={color} />,
-            }}
-          />
+
         </Tabs>
       );
     }

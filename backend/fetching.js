@@ -300,7 +300,7 @@ async function fetchGeckoCandles(network, poolAddress, timeframe) {
 // const candles = await fetchGeckoCandles(
 //   "solana",
 //   "6ZvXsZZAX2ffB5MXEuNBgdXScdZpnmyw42ZxaAKVnGmj",
-//   "day"
+//   "hour"
 // );
 // console.log(candles);
 
@@ -374,184 +374,198 @@ async function fetch24hrsTimeTradingActivity(network, poolId) {
 // console.log(tradingActivity);
 
 export const individualComponent = async(data) => {
+    try {
+        console.log(`Entered individualComponent with data:`, data);
 
-    console.log(`Entered individualComponent with data:`, data);
+        //saving data to a file
+        const tempoutputPath = path.join(__dirname, 'gettingData.json');
+        fs.writeFileSync(tempoutputPath, JSON.stringify(data, null, 2));
+        console.log(`Data saved to: ${tempoutputPath}`);
 
-    const { token, tokenName, tradeCA, price, marketCap, marketCapValue, change30m, change24h, change24hValue, volume24h, volume24hValue, liquidityFull, liquidity, buyPressure, sellPressure, holders, age } = data;
-    
-    const address = tradeCA.split('/t/')[1].split('/@')[0];
-    console.log(`Fetching best pair for token: ${token} (${address})`);
-    
-    const oldbestPair = await getPairsByTokenAddress(address);
-    const bestPair = oldbestPair[0]; // Get the best pair based on scoring
+        const { token, tokenName, tradeCA, price, marketCap, marketCapValue, change30m, change24h, change24hValue, volume24h, volume24hValue, liquidityFull, liquidity, buyPressure, sellPressure, holders, age } = data;
+        
+        const address = tradeCA.split('/t/')[1].split('/@')[0];
+        console.log(`Fetching best pair for token: ${token} (${address})`);
+        
+        const oldbestPair = await getPairsByTokenAddress(address);
+        const bestPair = oldbestPair?.[0] || null; // Get the best pair based on scoring
 
-    console.log(`🏆 Best Pair:`, bestPair);
-    if (!bestPair) {
-        console.warn(`No pairs found for token: ${token}`);
+        console.log(`🏆 Best Pair:`, bestPair);
+        if (!bestPair) {
+            console.warn(`No pairs found for token: ${token}`);
+            return null;
+        }
+
+        const tradingActivityParams = {
+            network: bestPair.chainId,
+            poolId: bestPair.pairAddress
+        };
+        
+        const candlesParams = {
+            network: bestPair.chainId,
+            poolAddress: bestPair.pairAddress,
+        };
+
+        const days = await fetchGeckoCandles(candlesParams.network, candlesParams.poolAddress, 'day') || [];
+        const hours = await fetchGeckoCandles(candlesParams.network, candlesParams.poolAddress, 'hour') || [];
+
+        const candlesAllFrame = {
+            hours: hours,
+            days: days,
+        }
+        
+        const fetchedtradingActivityData = await fetch24hrsTimeTradingActivity(
+            tradingActivityParams.network,
+            tradingActivityParams.poolId
+        ) || {};
+
+        const getTradeStatsParams = {
+            chainId: bestPair.chainId,
+            token: bestPair.baseToken?.address,
+            sideToken: bestPair.quoteToken?.address,
+            pairAddress: bestPair.pairAddress
+        };
+
+        const resultgetTradeStats = await getTradeStats(getTradeStatsParams.chainId,
+        getTradeStatsParams.token,
+        getTradeStatsParams.sideToken,
+        getTradeStatsParams.pairAddress
+      ) || {};
+
+      const highPrice = candlesAllFrame.days.reduce((max, c) => Math.max(max, c.high), 0);
+      const lowPrice = candlesAllFrame.days.reduce((min, c) => Math.min(min, c.low), Infinity);
+      const closePrice = candlesAllFrame.days[candlesAllFrame.days.length - 1]?.close || 0;
+      const openPrice = candlesAllFrame.days[0]?.open || 0;
+
+
+        const basicInfo = {
+            token: token,
+            tokenName: tokenName,
+            contractAddress: bestPair.pairAddress,
+            tradeUrl: tradeCA,
+            chainId: bestPair.chainId,
+            dexId: bestPair.dexId,
+            isVerified: true
+        }
+
+        // Price & OHLC Data
+        const livepriceData = {
+            currentPrice: bestPair.priceUsd,
+            priceNative: bestPair.priceNative,
+            timeStamp: new Date().toISOString(),
+        }
+
+        const dailyPriceSummary = {
+            openPrice: openPrice.toFixed(5),
+            highPrice: highPrice.toFixed(5),
+            lowPrice: lowPrice.toFixed(5),
+            closePrice: closePrice.toFixed(5),
+        }
+
+        const ohlcData = candlesAllFrame;
+
+        // Performance Chart Data
+        const performanceData = {
+            timeStamp: new Date().toISOString(),
+            price: bestPair.priceUsd,
+            volume: bestPair.volume?.h24,
+            marketCap: bestPair.marketCap,
+            liquidity: bestPair.liquidity?.usd
+        };
+
+        // Multi-Timeframe Momentum
+        const momentumData = {
+            m5: bestPair.priceChange?.m5,
+            h1: bestPair.priceChange?.h1,
+            h6: bestPair.priceChange?.h6,
+            h24: bestPair.priceChange?.h24
+        };
+
+        const liquidityData = {
+            usd: bestPair.liquidity?.usd,
+            base: bestPair.liquidity?.base,
+            quote: bestPair.liquidity?.quote
+        };
+
+        const tokenAge = {
+            pairCreatedAt: bestPair.pairCreatedAt,
+        };
+
+        const alltimetradingActivity = { 
+            totalTrades: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.trades,
+            totalVolume: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.traded_volume,
+            totalBuys: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.buys,
+            totalSells: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.sells,
+            totalBuyVolume: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.buy_volume,
+            totalSellVolume: resultgetTradeStats.data?.Solana?.DEXTradeByTokens?.[0]?.sell_volume
+          }
+        
+          const dailyTradingActivity = fetchedtradingActivityData
+
+          const mediaImages = {
+            imageUrl: bestPair.info?.imageUrl,
+            header: bestPair.info?.header,
+            openGraph: bestPair.info?.openGraph
+        };
+
+        const socialLinks = {
+            websites: bestPair.info?.websites || [],
+            socials: bestPair.info?.socials || []
+        };
+        
+          // saving all data to a file
+        const outputData = {
+            basicInfo,
+            livepriceData,
+            dailyPriceSummary,
+            ohlcData,
+            performanceData,
+            momentumData,
+            liquidityData,
+            tokenAge,
+            tradingActivity:{
+                allTime: alltimetradingActivity,
+                last24h: dailyTradingActivity
+            },
+            mediaImages,
+            socialLinks
+        };
+
+        const outputPath = path.join(__dirname, 'individualComponentData.json');
+        fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
+        console.log(`Individual component data saved to: ${outputPath}`);
+        
+        return outputData
+    } catch (err) {
+        console.error("Error in individualComponent:", err);
         return null;
     }
-
-    const candlesParams = {
-        network: bestPair.chainId,
-        poolAddress: bestPair.pairAddress,
-        timeframe: 'day'
-    };
-
-    const tradingActivityParams = {
-        network: bestPair.chainId,
-        poolId: bestPair.pairAddress
-    };
-    
-
-    const candles = await fetchGeckoCandles(candlesParams.network, candlesParams.poolAddress, candlesParams.timeframe);
-    
-    const fetchedtradingActivityData = await fetch24hrsTimeTradingActivity(
-        tradingActivityParams.network,
-        tradingActivityParams.poolId
-    );
-
-    const getTradeStatsParams = {
-        chainId: bestPair.chainId,
-        token: bestPair.baseToken.address,
-        sideToken: bestPair.quoteToken.address,
-        pairAddress: bestPair.pairAddress
-    };
-
-    const resultgetTradeStats = await getTradeStats(getTradeStatsParams.chainId,
-    getTradeStatsParams.token,
-    getTradeStatsParams.sideToken,
-    getTradeStatsParams.pairAddress
-  );
-
-  const highPrice = candles.reduce((max, c) => Math.max(max, c.high), 0);
-  const lowPrice = candles.reduce((min, c) => Math.min(min, c.low), Infinity);
-  const closePrice = candles[candles.length - 1]?.close || 0;
-  const openPrice = candles[0]?.open || 0;
+};
 
 
-    const basicInfo = {
-        token: token,
-        tokenName: tokenName,
-        contractAddress: bestPair.pairAddress,
-        tradeUrl: tradeCA,
-        chainId: bestPair.chainId,
-        dexId: bestPair.dexId,
-        isVerified: true
-    }
-
-    // Price & OHLC Data
-    const livepriceData = {
-        currentPrice: bestPair.priceUsd,
-        priceNative: bestPair.priceNative,
-        timeStamp: new Date().toISOString(),
-    }
-
-    const dailyPriceSummary = {
-        openPrice: openPrice.toFixed(5),
-        highPrice: highPrice.toFixed(5),
-        lowPrice: lowPrice.toFixed(5),
-        closePrice: closePrice.toFixed(5),
-    }
-
-    const ohlcData = candles
-
-    // Performance Chart Data
-
-    const performanceData = {
-        timeStamp: new Date().toISOString(),
-        price: bestPair.priceUsd,
-        volume: bestPair.volume.h24,
-        marketCap: bestPair.marketCap,
-        liquidity: bestPair.liquidity.usd
-    };
-
-    // Multi-Timeframe Momentum
-    const momentumData = {
-        m5: bestPair.priceChange.m5,
-        h1: bestPair.priceChange.h1,
-        h6: bestPair.priceChange.h6,
-        h24: bestPair.priceChange.h24
-    };
-
-    const liquidityData = {
-        usd: bestPair.liquidity.usd,
-        base: bestPair.liquidity.base,
-        quote: bestPair.liquidity.quote
-    };
-
-    const tokenAge = {
-        pairCreatedAt: bestPair.pairCreatedAt,
-    };
-
-    const alltimetradingActivity = { 
-        totalTrades: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].trades,
-        totalVolume: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].traded_volume,
-        totalBuys: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].buys,
-        totalSells: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].sells,
-        totalBuyVolume: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].buy_volume,
-        totalSellVolume: resultgetTradeStats.data.Solana.DEXTradeByTokens[0].sell_volume
-      }
-    
-      const dailyTradingActivity = fetchedtradingActivityData
-
-      const mediaImages = {
-        imageUrl: bestPair.info.imageUrl,
-        header: bestPair.info.header,
-        openGraph: bestPair.info.openGraph
-    };
-
-    const socialLinks = {
-        websites: bestPair.info.websites || [],
-        socials: bestPair.info.socials || []
-    };
-    
-      // saving all data to a file
-    const outputData = {
-        basicInfo,
-        livepriceData,
-        dailyPriceSummary,
-        ohlcData,
-        performanceData,
-        momentumData,
-        liquidityData,
-        tokenAge,
-        tradingActivity:{
-            allTime: alltimetradingActivity,
-            last24h: dailyTradingActivity
-        },
-        mediaImages,
-        socialLinks
-    };
-
-    const outputPath = path.join(__dirname, 'individualComponentData.json');
-    fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
-    console.log(`Individual component data saved to: ${outputPath}`);
-    };
-
-
-    individualComponent({
-        "token": "DUPE",
-        "tokenName": "Dupe",
-        "tradeCA": "https://axiom.trade/t/fRfKGCriduzDwSudCwpL7ySCEiboNuryhZDVJtr1a1C/@bscreener",
-        "price": "$0.021350",
-        "marketCap": "$21.35M",
-        "marketCapValue": 21350000,
-        "change30m": "↓1.43%",
-        "change24h": "↓11.40%",
-        "change24hValue": 11.4,
-        "volume24h": "$989.60K",
-        "volume24hValue": 989600,
-        "liquidityFull": {
-          "liquidity": "2.17M",
-          "buy": "2.79K",
-          "sell": "1.94K"
-        },
-        "liquidity": "2.17M",
-        "buyPressure": "2.79K",
-        "sellPressure": "1.94K",
-        "holders": "7K",
-        "age": "1mo"
-        }
-    ).catch(err => {
-        console.error("Error in individualComponent:", err);
-    });  
+    // individualComponent({
+    //     "token": "DUPE",
+    //     "tokenName": "Dupe",
+    //     "tradeCA": "https://axiom.trade/t/fRfKGCriduzDwSudCwpL7ySCEiboNuryhZDVJtr1a1C/@bscreener",
+    //     "price": "$0.021350",
+    //     "marketCap": "$21.35M",
+    //     "marketCapValue": 21350000,
+    //     "change30m": "↓1.43%",
+    //     "change24h": "↓11.40%",
+    //     "change24hValue": 11.4,
+    //     "volume24h": "$989.60K",
+    //     "volume24hValue": 989600,
+    //     "liquidityFull": {
+    //       "liquidity": "2.17M",
+    //       "buy": "2.79K",
+    //       "sell": "1.94K"
+    //     },
+    //     "liquidity": "2.17M",
+    //     "buyPressure": "2.79K",
+    //     "sellPressure": "1.94K",
+    //     "holders": "7K",
+    //     "age": "1mo"
+    //     }
+    // ).catch(err => {
+    //     console.error("Error in individualComponent:", err);
+    // });  
