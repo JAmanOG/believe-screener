@@ -174,96 +174,6 @@ async function extractNewLaunchTableData(page) {
     });
 }
 
-// export async function scrapeData() {    
-//     const url = "https://www.believescreener.com";
-
-//     const browser = await puppeteer.launch({
-//         headless: true, // Set to true for headless mode
-//         userDataDir: userDataDir,
-//         args: ["--start-maximized", "--no-sandbox", "--disable-setuid-sandbox"],
-//         ignoreHTTPSErrors: true,
-//         executablePath: chromePath,
-//     });
-
-//     const page = await browser.newPage();
-//     await page.goto(url, { waitUntil: "networkidle2" });
-
-//     await page.setViewport({width: 1080, height: 1024});
-
-//     console.log("Waiting for page to load...");
-
-//     let currentTab = 'top-gainers';
-//     let newLaunchTableData = [];
-//     let intervalCounter = 0;
-
-//     setInterval(async () => {
-//         try {
-//             intervalCounter++;
-
-//             // Switch to new-launches every 3 intervals (15 seconds)
-//             if (intervalCounter % 3 === 0) {
-//                 console.log('Switching to New Launches tab... 15 seconds passed');
-//                 await page.click('[id*="trigger-recent-launches"]');
-//                 currentTab = 'new-launches';
-                
-//                 // Wait 1 second for tab to load
-//                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
-//                 newLaunchTableData = await extractNewLaunchTableData(page);
-//                 console.log(`Extracted ${newLaunchTableData.length} new launches from Believe Screener`);
-                
-//                 // Stay on new-launches for 1 more second (total 2 seconds)
-//                 await new Promise(resolve => setTimeout(resolve, 1000));
-                
-//                 // Switch back to Top 75 tab
-//                 console.log('Switching back to Top 75 tab...');
-//                 await page.evaluate(() => {
-//                     const tabs = Array.from(document.querySelectorAll('button[role="tab"][data-slot="tabs-trigger"]'));
-//                     const target = tabs.find(tab => tab.textContent.trim() === "Top 75");
-//                     target?.click();
-//                 });
-//                 currentTab = 'top-gainers';
-                
-//                 // Wait for tab to load before continuing
-//                 await new Promise(resolve => setTimeout(resolve, 1000));
-//             }
-
-//             // Extract table data from current tab
-//             const tableData = await page.evaluate(() => {
-//                 const rows = Array.from(document.querySelectorAll("table tbody tr"));
-//                 return rows.map(row => {
-//                     const columns = Array.from(row.querySelectorAll("td"));
-//                     return columns.map(col => col.innerText.trim());
-//                 });
-//             });
-
-//             // Extract other data (these don't change frequently)
-//             const globalStats = await extractGlobalStats(page);
-//             const majorCardDetails = await extractMajorCardDetails(page);
-
-//             // console.log(globalStats);
-//             // console.log("<----------------------->");
-//             // console.log(majorCardDetails);
-
-//             const otherData = {
-//                 globalStats: globalStats,
-//                 majorCardDetails: majorCardDetails,
-//                 newLaunchTableData: newLaunchTableData
-//             };
-
-//             const filteredData = filterAndFormatData(tableData, otherData);
-
-//             // console.log(`Extracted ${tableData.length} tokens from ${currentTab} tab`);
-            
-//         } catch (error) {
-//             console.error("Error during scraping:", error);
-//         }
-
-//     }, 5000); // 5 second intervals
-// }
-
-
-
 // Call the scrapeData function to start scraping
 
 export async function scrapeData() {    
@@ -275,6 +185,7 @@ export async function scrapeData() {
         args: ["--start-maximized", "--no-sandbox", "--disable-setuid-sandbox"],
         ignoreHTTPSErrors: true,
         executablePath: chromePath,
+        protocolTimeout: 120000
     });
 
     const page = await browser.newPage();

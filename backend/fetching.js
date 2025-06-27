@@ -275,26 +275,36 @@ const resultgetTradeStats = await getTradeStats(
 
 // return candles for a specific pool on a specific network
 async function fetchGeckoCandles(network, poolAddress, timeframe) {
-  const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${poolAddress}/ohlcv/${timeframe}`;
-  console.log(`Fetching candles from: ${url}`);
-  const res = await fetch(url);
-  console.log(`Fetching candles from: ${url}`);
-  if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
-  const json = await res.json();
-  const data =  json.data.attributes.ohlcv_list.map(c => ({
-    timestamp: c[0],
-    open: c[1],
-    high: c[2],
-    low: c[3],
-    close: c[4],
-    volume: c[5]
-  }));
-  // Convert timestamps to milliseconds
-  return data.map(candle => ({
-    ...candle,
-    timestamp: new Date(candle.timestamp * 1000).toISOString()
-  }));
-}
+    const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${poolAddress}/ohlcv/${timeframe}`;
+    try {
+      console.log(`Fetching candles from: ${url}`);
+      const res = await fetch(url);
+      if (!res.ok) {
+        if (res.status === 404) {
+          console.warn(`Candles not found for ${url}, returning empty array.`);
+          return [];
+        }
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+      }
+      const json = await res.json();
+      const data = json.data.attributes.ohlcv_list.map(c => ({
+        timestamp: c[0],
+        open: c[1],
+        high: c[2],
+        low: c[3],
+        close: c[4],
+        volume: c[5]
+      }));
+      // Convert timestamps to milliseconds
+      return data.map(candle => ({
+        ...candle,
+        timestamp: new Date(candle.timestamp * 1000).toISOString()
+      }));
+    } catch (err) {
+      console.warn(`Error fetching candles for ${url}: ${err.message}`);
+      return [];
+    }
+  }
 
 // Usage:
 // const candles = await fetchGeckoCandles(
@@ -352,20 +362,34 @@ async function fetchGeckoCandles(network, poolAddress, timeframe) {
 
 async function fetch24hrsTimeTradingActivity(network, poolId) {
     const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${poolId}`;
-    console.log(`Fetching all-time trading activity from: ${url}`);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
-    const json = await res.json();
-    const newdata = json.data.attributes
-    const tradingActivity = {
-        totalTrades: newdata.transactions.h24.buys + newdata.transactions.h24.sells,
-        uniqueWallets: newdata.transactions.h24.buyers + newdata.transactions.h24.sellers,
-        buys: newdata.transactions.h24.buys,
-        sells: newdata.transactions.h24.sells,
-        volume: newdata.volume_usd.h24
-    };
-    return tradingActivity;
+    try {
+        console.log(`Fetching all-time trading activity from: ${url}`);
+        const res = await fetch(url);
+        if (!res.ok) {
+            // If 404 or any error, return empty object instead of throwing
+            if (res.status === 404) {
+                console.warn(`Trading activity not found for ${url}, returning empty object.`);
+                return {};
+            }
+            throw new Error(`Error ${res.status}: ${res.statusText}`);
+        }
+        const json = await res.json();
+        const newdata = json.data.attributes;
+        const tradingActivity = {
+            totalTrades: newdata.transactions.h24.buys + newdata.transactions.h24.sells,
+            uniqueWallets: newdata.transactions.h24.buyers + newdata.transactions.h24.sellers,
+            buys: newdata.transactions.h24.buys,
+            sells: newdata.transactions.h24.sells,
+            volume: newdata.volume_usd.h24
+        };
+        return tradingActivity;
+    } catch (err) {
+        // For any error, log and return empty object
+        console.warn(`Error fetching trading activity for ${url}: ${err.message}`);
+        return {};
+    }
 }
+
 // Usage:
 // const tradingActivity = await fetch24hrsTimeTradingActivity(
 //     "solana",

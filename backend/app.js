@@ -85,7 +85,7 @@ setInterval(() => {
   if (io.engine.clientsCount > 0) {
     emitFilteredData();
   }
-}, 5000000); // 10 seconds
+}, 5000); 
 
 
 io.on('connection', (socket) => {
