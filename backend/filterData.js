@@ -142,4 +142,4 @@ export { filterAndFormatData };
 
 // Run the filter directly
 
-filterAndFormatData();
+// filterAndFormatData();
