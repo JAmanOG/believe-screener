@@ -36,7 +36,7 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 // Serve static files from the "public" directory
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve the index.html at root
 app.get('/', (req, res) => {

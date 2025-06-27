@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     paths:
-      - '**'
+      - 'backend/**'
       - '.github/workflows/believerappbackend-AutoDeployTrigger.yml'
   workflow_dispatch:      
 
@@ -26,7 +26,6 @@ jobs:
           client-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_SUBSCRIPTION_ID }}
-
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
@@ -39,11 +38,11 @@ jobs:
           resourceGroup: believerapp
           imageToBuild: believerappb9cdc9.azurecr.io/believerappbackend:${{ github.sha }}
           environmentVariables: |
-            PORT=${{ secrets.PORT }}
-            NODE_ENV=${{ secrets.NODE_ENV }}
-            PUPPETEER_EXECUTABLE_PATH=${{ secrets.PUPPETEER_EXECUTABLE_PATH }}
-            BITQUERY_API_KEY=${{ secrets.BITQUERY_API_KEY }}
-            DEBUG=true          
+            PORT: ${{ secrets.PORT }}
+            NODE_ENV: ${{ secrets.NODE_ENV }}
+            PUPPETEER_EXECUTABLE_PATH: ${{ secrets.PUPPETEER_EXECUTABLE_PATH }}
+            BITQUERY_API_KEY: ${{ secrets.BITQUERY_API_KEY }}
+            DEBUG: true
           buildArguments: |
             ARG1=value1
             ARG2=value2
