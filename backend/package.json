@@ -5,8 +5,8 @@
   "description": "Enhanced BelieverScreener - AI-powered crypto token analysis",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"node scrapeData.js\" \"node app.js\"",
-    "dev": "nodemon app.js",
+    "dev": "concurrently \"node scrapeData.js\" \"node app.js\"",
+    "start": "pm2-runtime ecosystem.config.cjs",
     "test-apis": "node testAPIs.js",
     "screen": "node fetchAllTokenData.js",
     "screen-fast": "node fetchAllTokenData.js --limit=25",
@@ -31,7 +31,7 @@
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
     "nodemon": "^3.1.10",
-    "puppeteer": "^24.10.2",
+    "puppeteer": "^24.11.0",
     "redis": "^5.5.6",
     "socket.io": "^4.8.1"
   }

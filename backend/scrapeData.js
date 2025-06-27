@@ -7,9 +7,9 @@ import { filterAndFormatData } from "./filterData.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const userDataDir = path.join(__dirname, "chrome-data");
+// const userDataDir = path.join(__dirname, "chrome-data");
 
-const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
+// const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 
 async function extractGlobalStats(page) {
     return await page.evaluate(() => {
@@ -181,12 +181,17 @@ export async function scrapeData() {
 
     const browser = await puppeteer.launch({
         headless: true,
-        userDataDir: userDataDir,
-        args: ["--start-maximized", "--no-sandbox", "--disable-setuid-sandbox"],
+        // userDataDir: userDataDir,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
         ignoreHTTPSErrors: true,
-        executablePath: chromePath,
-        protocolTimeout: 120000
+        protocolTimeout: 120000,
+        executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
+  
+    // });
 
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
