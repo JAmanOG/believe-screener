@@ -1,0 +1,43 @@
+name: Trigger auto deployment for believerappbackend
+
+on:
+  push:
+    branches: 
+      - master
+    paths:
+      - '**'
+      - '.github/workflows/believerappbackend-AutoDeployTrigger.yml'
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.BELIEVERAPPBACKEND_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: backend
+          dockerfilePath: Dockerfile
+          registryUrl: believerappb9cdc9.azurecr.io
+          registryUsername: ${{ secrets.BELIEVERAPPBACKEND_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.BELIEVERAPPBACKEND_REGISTRY_PASSWORD }}
+          containerAppName: believerappbackend
+          resourceGroup: believerapp
+          imageToBuild: believerappb9cdc9.azurecr.io/believerappbackend:${{ github.sha }}
+          buildArguments: |
+            ARG1=value1
+            ARG2=value2
