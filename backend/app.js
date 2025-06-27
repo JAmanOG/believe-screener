@@ -13,14 +13,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const sslOptions = {
-  key: fs.readFileSync(path.join(__dirname, 'ssl', 'private-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'ssl', 'certificate.pem'))
-};
+// const sslOptions = {
+//   key: fs.readFileSync(path.join(__dirname, 'ssl', 'private-key.pem')),
+//   cert: fs.readFileSync(path.join(__dirname, 'ssl', 'certificate.pem'))
+// };
 
 // Create HTTP server
 const server = createServer(app);
-const httpsServer = createHttpsServer(sslOptions, app);
+// const httpsServer = createHttpsServer(sslOptions, app);
 
 
 // Initialize Socket.IO with the HTTP server
