@@ -244,8 +244,8 @@ docker run -p 3000:3000 --env-file .env believescreener-backend
 
 For any questions, issues, or suggestions regarding BelieveScreener Clone, feel free to reach out:
 
-- **Email:** amanjaiswalwork@gmail.com
-- **Twitter:** [@amanjaiswalwork](https://twitter.com/amanjaiswalwork)
-- **GitHub Issues:** [Open an issue](https://github.com/your-github-username/believescreener/issues)
+- **Email:** hello@aman-jaiswal.tech
+- **Twitter:** [@Aman09143227](https://x.com/Aman09143227)
+- **GitHub Issues:** [Open an issue](https://github.com/JAmanOG/believe-screener/issues)
 
 I'm happy to help with any problems or feedback!
