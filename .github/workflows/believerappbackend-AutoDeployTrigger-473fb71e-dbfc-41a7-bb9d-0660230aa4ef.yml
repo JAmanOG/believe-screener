@@ -38,11 +38,11 @@ jobs:
           resourceGroup: believerapp
           imageToBuild: believerappb9cdc9.azurecr.io/believerappbackend:${{ github.sha }}
           environmentVariables: |
-            PORT: ${{ secrets.PORT }}
-            NODE_ENV: ${{ secrets.NODE_ENV }}
-            PUPPETEER_EXECUTABLE_PATH: ${{ secrets.PUPPETEER_EXECUTABLE_PATH }}
-            BITQUERY_API_KEY: ${{ secrets.BITQUERY_API_KEY }}
-            DEBUG: true
+            PORT=${{ secrets.PORT }}
+            NODE_ENV=${{ secrets.NODE_ENV }}
+            PUPPETEER_EXECUTABLE_PATH=${{ secrets.PUPPETEER_EXECUTABLE_PATH }}
+            BITQUERY_API_KEY=${{ secrets.BITQUERY_API_KEY }}
+            DEBUG=true
           buildArguments: |
             ARG1=value1
             ARG2=value2
