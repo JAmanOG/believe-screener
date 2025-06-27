@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - '**'
-      - '.github/workflows/believerappbackend-AutoDeployTrigger-473fb71e-dbfc-41a7-bb9d-0660230aa4ef.yml'
+      - '.github/workflows/believerappbackend-AutoDeployTrigger.yml'
   workflow_dispatch:      
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: backend
-          dockerfilePath: backend/Dockerfile
+          dockerfilePath: Dockerfile
           registryUrl: believerappb9cdc9.azurecr.io
           registryUsername: ${{ secrets.BELIEVERAPPBACKEND_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.BELIEVERAPPBACKEND_REGISTRY_PASSWORD }}
@@ -41,4 +41,3 @@ jobs:
           buildArguments: |
             ARG1=value1
             ARG2=value2
-
