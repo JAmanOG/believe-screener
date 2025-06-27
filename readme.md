@@ -7,7 +7,7 @@ BelieveScreener Native App is a full-stack platform for discovering, tracking, a
 
 ## Demo Video
 
-[Watch the demo video here](https://drive.google.com/file/d/1urXjbjW8R4OsPRt6fuw1AulKF09fdwU-/view?usp=sharing)
+[Watch the demo video here](https://drive.google.com/file/d/1ZKE6LCD-Dj_z3zdPySEqx0Hea8-1vCge/view)
 
 
 # BelieveScreener Backend

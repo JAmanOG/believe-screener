@@ -567,11 +567,15 @@ export default function HomeScreen() {
     <SafeAreaView
       className={`flex-1 ${theme === "dark" ? "bg-black" : "bg-white"}`}
     >
-      <ScrollView
+      {/* <ScrollView
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
-      >
+      > */}
+
+{activeView === "Table View" ? (
+        <>
+
         {/* Header */}
         <View className="flex-row justify-between items-center px-5 py-4">
           <Text
@@ -738,8 +742,8 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {activeView === "Table View" ? (
-          <>
+        {/* {activeView === "Table View" ? (
+          <> */}
             {/* Table Header */}
             <View
               className={`flex-row px-5 py-3 border-b ${
@@ -805,11 +809,183 @@ export default function HomeScreen() {
               keyExtractor={(item) => String(item.token)}
               renderItem={({ item, index }) => renderTableRow(item, index)}
             />
-          </>
-        ) : (
-          renderHeatmapView()
+        </>
+      ) : (
+        <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+            {/* Header */}
+            <View className="flex-row justify-between items-center px-5 py-4">
+          <Text
+            className={`${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            } text-xl font-bold tracking-wide`}
+          >
+            BelieveScreener
+          </Text>
+          <View className="flex-row gap-4">
+            {/* Theme Toggle Button */}
+            <TouchableOpacity
+              className={`w-10 h-10 ${
+                theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+              } rounded-full justify-center items-center`}
+              onPress={toggleTheme}
+            >
+              <Ionicons
+                name={theme === "dark" ? "sunny" : "moon"}
+                size={20}
+                color={theme === "dark" ? "#FCD34D" : "#6B7280"}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className={`w-10 h-10 ${
+                theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+              } rounded-full justify-center items-center`}
+            >
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color={colors.text}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className={`w-10 h-10 ${
+                theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+              } rounded-full justify-center items-center`}
+            >
+              <Ionicons name="menu" size={24} color={colors.text} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Global Stats */}
+        <View className="px-5 mb-6">
+          <View className="flex-row justify-between">
+            {globalStats.map((stat: any, index: number) => (
+              <View
+                key={index}
+                className={`flex-1 ${
+                  theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+                } rounded-xl p-4 ${index < globalStats.length - 1 ? "mr-2" : ""}`}
+                style={{ minHeight: 120 }}
+              >
+                <Text
+                  className={`${
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                  } text-xs font-semibold mb-2 uppercase tracking-wide`}
+                >
+                  {stat.title}
+                </Text>
+                <Text
+                  className={`${
+                    theme === "dark" ? "text-white" : "text-gray-900"
+                  } text-lg font-bold mb-2 leading-tight`}
+                >
+                  {stat.value}
+                </Text>
+                <Text
+                  className={`${
+                    theme === "dark" ? "text-gray-500" : "text-gray-500"
+                  } text-xs leading-normal flex-1`}
+                >
+                  {stat.subDetail}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View className="flex-row justify-between items-center px-5 my-4">
+          <Text
+            className={`${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            } text-lg font-semibold`}
+          >
+            Major Market Stats
+          </Text>
+          <TouchableOpacity>
+            <Text
+              className={`${
+                theme === "dark" ? "text-blue-400" : "text-blue-600"
+              } text-sm`}
+            >
+              Refresh
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="pl-5"
+        >
+          {enhancedMajorStats.map((stat: any, index: number) =>
+            renderMajorStatCard(stat, index)
+          )}
+        </ScrollView>
+
+        {/* View Toggle */}
+        <View
+          className={`flex-row ${
+            theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+          } mx-5 my-5 rounded-full p-1`}
+        >
+          <TouchableOpacity
+            className={`flex-1 py-3 items-center rounded-full ${
+              activeView === "Table View"
+                ? theme === "dark"
+                  ? "bg-gray-700"
+                  : "bg-white"
+                : ""
+            }`}
+            onPress={() => setActiveView("Table View")}
+          >
+            <Text
+              className={`text-sm ${
+                activeView === "Table View"
+                  ? theme === "dark"
+                    ? "text-white"
+                    : "text-gray-900"
+                  : theme === "dark"
+                    ? "text-gray-400"
+                    : "text-gray-600"
+              }`}
+            >
+              Table View
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className={`flex-1 py-3 items-center rounded-full ${
+              activeView === "Heatmap View"
+                ? theme === "dark"
+                  ? "bg-gray-700"
+                  : "bg-white"
+                : ""
+            }`}
+            onPress={() => setActiveView("Heatmap View")}
+          >
+            <Text
+              className={`text-sm ${
+                activeView === "Heatmap View"
+                  ? theme === "dark"
+                    ? "text-white"
+                    : "text-gray-900"
+                  : theme === "dark"
+                    ? "text-gray-400"
+                    : "text-gray-600"
+              }`}
+            >
+              Heatmap View
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+
+        {renderHeatmapView()}
+        </ScrollView>
         )}
-      </ScrollView>
     </SafeAreaView>
   );
 }
