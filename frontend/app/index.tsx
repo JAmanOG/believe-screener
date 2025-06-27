@@ -1,5 +1,7 @@
-import { Redirect } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function Index() {
-  return <Redirect href="/(tabs)/HomeScreen" />;
+  return <Stack screenOptions={{ headerShown: false }}>
+    {/* Add your screens here */}
+  </Stack>
 }

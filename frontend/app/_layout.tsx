@@ -20,6 +20,7 @@ export default function Layout() {
     <ThemeProvider>
       <SocketProvider>
       <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="WelcomePage" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="IndividualToken" options={{ headerShown: false }} />
         </Stack>

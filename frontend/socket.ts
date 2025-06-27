@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // Use http and prioritize polling for React Native/Expo
-const socket = io(`http://${process.env.EXPO_SERVER_URL}:3000`, {
+const socket = io(`https://l7s75wk0-3000.inc1.devtunnels.ms/`, {
     path: "/socket.io/",
     transports: ["polling", "websocket"], // Try polling first, then websocket
     autoConnect: false, // Let the context handle connection

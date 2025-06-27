@@ -2,9 +2,10 @@ import { Colors } from '@/constants/Colors';
 import { useTheme } from '@/hooks/useTheme';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSocket } from '../../hooks/useSocket';
+
 interface StockData {
   token: string;
   tokenName: string;
@@ -17,63 +18,63 @@ interface StockData {
   chartData: number[];
 }
 
-const mockStockData: StockData[] = [
-  {
-    token: "DUPE",
-    tokenName: "Dupe",
-    price: "$0.021064",
-    change24h: "-8.55%",
-    change24hValue: -8.55,
-    marketCap: "$21.06M",
-    liquidity: "$2.12M",
-    holders: "7K",
-    chartData: [100, 95, 88, 92, 85, 78, 82, 75, 70, 72, 68, 65],
-  },
-  {
-    token: "BTC",
-    tokenName: "Bitcoin",
-    price: "$32,811.00",
-    change24h: "-2.27%",
-    change24hValue: -2.27,
-    marketCap: "$3.4T",
-    liquidity: "$850M",
-    holders: "15.8M",
-    chartData: [100, 98, 95, 92, 88, 85, 82, 78, 75, 72, 68, 65],
-  },
-  {
-    token: "ETH",
-    tokenName: "Ethereum",
-    price: "$2,489.10",
-    change24h: "+3.95%",
-    change24hValue: 3.95,
-    marketCap: "$902B",
-    liquidity: "$520M",
-    holders: "3.2M",
-    chartData: [60, 65, 68, 72, 75, 78, 82, 85, 88, 92, 95, 98],
-  },
-  {
-    token: "SOL",
-    tokenName: "Solana",
-    price: "$178.32",
-    change24h: "+12.25%",
-    change24hValue: 12.25,
-    marketCap: "$2.2T",
-    liquidity: "$420M",
-    holders: "2.8M",
-    chartData: [70, 75, 78, 82, 85, 88, 92, 95, 98, 102, 105, 108],
-  },
-  {
-    token: "ADA",
-    tokenName: "Cardano",
-    price: "$0.45",
-    change24h: "-1.20%",
-    change24hValue: -1.20,
-    marketCap: "$89.5B",
-    liquidity: "$180M",
-    holders: "4.1M",
-    chartData: [100, 99, 97, 95, 96, 94, 92, 90, 89, 91, 88, 87],
-  }
-];
+// const mockStockData: StockData[] = [
+//   {
+//     token: "DUPE",
+//     tokenName: "Dupe",
+//     price: "$0.021064",
+//     change24h: "-8.55%",
+//     change24hValue: -8.55,
+//     marketCap: "$21.06M",
+//     liquidity: "$2.12M",
+//     holders: "7K",
+//     chartData: [100, 95, 88, 92, 85, 78, 82, 75, 70, 72, 68, 65],
+//   },
+//   {
+//     token: "BTC",
+//     tokenName: "Bitcoin",
+//     price: "$32,811.00",
+//     change24h: "-2.27%",
+//     change24hValue: -2.27,
+//     marketCap: "$3.4T",
+//     liquidity: "$850M",
+//     holders: "15.8M",
+//     chartData: [100, 98, 95, 92, 88, 85, 82, 78, 75, 72, 68, 65],
+//   },
+//   {
+//     token: "ETH",
+//     tokenName: "Ethereum",
+//     price: "$2,489.10",
+//     change24h: "+3.95%",
+//     change24hValue: 3.95,
+//     marketCap: "$902B",
+//     liquidity: "$520M",
+//     holders: "3.2M",
+//     chartData: [60, 65, 68, 72, 75, 78, 82, 85, 88, 92, 95, 98],
+//   },
+//   {
+//     token: "SOL",
+//     tokenName: "Solana",
+//     price: "$178.32",
+//     change24h: "+12.25%",
+//     change24hValue: 12.25,
+//     marketCap: "$2.2T",
+//     liquidity: "$420M",
+//     holders: "2.8M",
+//     chartData: [70, 75, 78, 82, 85, 88, 92, 95, 98, 102, 105, 108],
+//   },
+//   {
+//     token: "ADA",
+//     tokenName: "Cardano",
+//     price: "$0.45",
+//     change24h: "-1.20%",
+//     change24hValue: -1.20,
+//     marketCap: "$89.5B",
+//     liquidity: "$180M",
+//     holders: "4.1M",
+//     chartData: [100, 99, 97, 95, 96, 94, 92, 90, 89, 91, 88, 87],
+//   }
+// ];
 
 const MiniChart: React.FC<{ data: number[]; isPositive: boolean }> = ({ data, isPositive }) => {
   const maxValue = Math.max(...data);
@@ -98,7 +99,7 @@ const MiniChart: React.FC<{ data: number[]; isPositive: boolean }> = ({ data, is
 };
 
 
-function generateMockChartData(tokenData) {
+function generateMockChartData(tokenData: StockData) {
   const currentPrice = parseFloat(tokenData.price.replace('$', ''));
   const change24h = tokenData.change24hValue;
   
@@ -125,19 +126,25 @@ export default function TopScreen() {
   const { isConnected, filteredData, connectionStatus } = useSocket();
   const router = useRouter();
   
-  const tokenData = filteredData ? filteredData.data.tableData : mockStockData;
+  const tokenData = (filteredData as any) ? (filteredData as any).data.tableData : [];
 
-  const tokenDataWithCharts = tokenData.map((token: any) => ({
+  const tokenDataWithCharts = React.useMemo(
+    () => tokenData.map((token: any) => ({
     ...token,
     chartData: generateMockChartData(token),
-  }));
+  })),
+  [tokenData]
+);
 
-  const filteredStocks = tokenDataWithCharts.filter((stock: any) =>
+  const filteredStocks = React.useMemo(
+    () => tokenDataWithCharts.filter((stock: any) =>
     stock.token.toLowerCase().includes(searchQuery.toLowerCase()) ||
     stock.tokenName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ),
+  [tokenDataWithCharts, searchQuery]
+);
 
-  const StockRow: React.FC<{ stock: StockData; theme: string }> = ({ stock, theme }) => {
+  const StockRow: React.FC<{ stock: StockData; theme: string }> = React.memo(({ stock, theme }) => {
     const isPositive = stock.change24hValue >= 0;
     
     return (
@@ -184,7 +191,7 @@ export default function TopScreen() {
         </View>
       </TouchableOpacity>
     );
-  };
+  });
   
 
   return (
@@ -257,20 +264,30 @@ export default function TopScreen() {
       </View>
 
       {/* Stock List */}
-      <ScrollView 
+      {/* <ScrollView 
         className="flex-1 px-5" 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {filteredStocks.map((stock, index) => (
+      > */}
+        {/* {filteredStocks.map((stock, index) => (
           <View key={index}>
             <StockRow stock={stock} theme={theme} />
             {index < filteredStocks.length - 1 && (
               <View className={`mx-0 h-px ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} />
             )}
           </View>
-        ))}
-      </ScrollView>
+        ))} */}
+
+<FlatList
+  data={filteredStocks}
+  keyExtractor={(item) => item.token}
+  renderItem={({ item }) => <StockRow stock={item} theme={theme} />}
+  ItemSeparatorComponent={() => (
+    <View className={`mx-0 h-px ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} />
+  )}
+  contentContainerStyle={{ paddingBottom: 20 }}
+/>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }

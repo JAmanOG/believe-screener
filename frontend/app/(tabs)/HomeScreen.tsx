@@ -1,17 +1,17 @@
 import { Colors } from "@/constants/Colors";
 import { useTheme } from "@/hooks/useTheme";
 import { Ionicons } from "@expo/vector-icons";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
+  FlatList,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSocket } from '../../hooks/useSocket';
+import { useSocket } from "../../hooks/useSocket";
 
 const { width } = Dimensions.get("window");
 
@@ -27,42 +27,19 @@ interface StockData {
   open: number;
 }
 
-interface tokenData {
-  symbol: ReactNode;
-  company: ReactNode;
-  change: number;
-  changePercent: ReactNode;
-  volume: ReactNode;
+interface TableTokenData {
   token: string;
-  tokenName: string;
-  tradeCA?: string;
-  price: string;
-  change24h: string;
-  change24hValue: number;
+  symbol: string;
+  company: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  volume: string;
   marketCap: string;
-  marketCapValue: number;
-  volume24h?: string;
-  change30m?: string;
-  volume24hValue?: number;
-  liquidityFull?: {
-    liquidity: string;
-    buy: string;
-    sell: string;
-  };
-  buyPressure?: string;
-  sellPressure?: string;
-  liquidity: string;
-  holders: string;
-  age?: string;
-  chartData?: number[];
+  previousClose: number;
+  open: number;
 }
-// interface ConvertedTokenData {
-//   token: string;
-//   marketCap: string;
-//   marketCapValue: number;
-//   change24hValue: number;
-//   holders: string;
-// }
+
 interface RawTokenData {
   token: string;
   tokenName: string;
@@ -87,116 +64,48 @@ interface RawTokenData {
   age?: string;
 }
 
-
 export default function HomeScreen() {
   const [activeView, setActiveView] = useState("Table View");
   const { theme, toggleTheme } = useTheme();
   const colors = Colors[theme];
   const { isConnected, filteredData, connectionStatus } = useSocket();
 
+  const globalStats = (filteredData as any)?.data?.otherData?.globalStats || [];
 
-  // const globalStats = [
-  //   {
-  //     title: "Lifetime Volume",
-  //     value: "$3,799,941,839",
-  //     subDetail: "Calculated about 4 hours ago",
-  //     type: "lifetime-volume",
-  //   },
-  //   {
-  //     title: "Coin Launches",
-  //     value: "40,716",
-  //     subDetail: "@launchcoin",
-  //     type: "coin-launches",
-  //   },
-  //   {
-  //     title: "Active Coins",
-  //     value: "180",
-  //     subDetail: "5+ trades in 24h",
-  //     type: "active-coins",
-  //   },
-  // ];
-  
-  const globalStats = filteredData?.data?.otherData?.globalStats || [];
-
-  // console.log("Global Stats:", globalStats);
-
-  // Original stock data for table view (keeping this unchanged)
-  // const stockData: StockData[] = [
-  //   {
-  //     symbol: "AAPL",
-  //     company: "Apple Inc.",
-  //     price: 150.25,
-  //     change: 2.5,
-  //     changePercent: 1.69,
-  //     volume: "45.2M",
-  //     marketCap: "2.4T",
-  //     previousClose: 147.75,
-  //     open: 148.5,
-  //   },
-  //   {
-  //     symbol: "GOOGL",
-  //     company: "Alphabet Inc.",
-  //     price: 2750.8,
-  //     change: 35.2,
-  //     changePercent: 1.3,
-  //     volume: "1.2M",
-  //     marketCap: "1.8T",
-  //     previousClose: 2715.6,
-  //     open: 2720.1,
-  //   },
-  //   {
-  //     symbol: "MSFT",
-  //     company: "Microsoft Corporation",
-  //     price: 305.15,
-  //     change: 4.8,
-  //     changePercent: 1.6,
-  //     volume: "25.8M",
-  //     marketCap: "2.3T",
-  //     previousClose: 300.35,
-  //     open: 301.2,
-  //   },
-  //   {
-  //     symbol: "TSLA",
-  //     company: "Tesla Inc.",
-  //     price: 850.45,
-  //     change: -12.3,
-  //     changePercent: -1.43,
-  //     volume: "35.7M",
-  //     marketCap: "850B",
-  //     previousClose: 862.75,
-  //     open: 855.2,
-  //   },
-  // ];
-
-  const liveTokenData = filteredData?.data?.tableData || [];
+  const liveTokenData = (filteredData as any)?.data?.tableData || [];
   const tableViewData = liveTokenData.slice(0, 5);
 
-    const convertTokenToTableFormat = (token: any) => {
+  const convertTokenToTableFormat = (token: any) => {
     // Parse price value
-    const priceValue = parseFloat(token.price.replace(/[$,]/g, '')) || 0;
-    
+    const priceValue = parseFloat(token.price.replace(/[$,]/g, "")) || 0;
+
     // Parse change percentage (remove arrows and % sign)
-    const changeValue = parseFloat(token.change24h?.replace(/[↑↓%]/g, '') || '0');
-    const isNegative = token.change24h?.includes('↓');
+    const changeValue = parseFloat(
+      token.change24h?.replace(/[↑↓%]/g, "") || "0"
+    );
+    const isNegative = token.change24h?.includes("↓");
     const finalChangeValue = isNegative ? -changeValue : changeValue;
 
     return {
+      token: token.token,
       symbol: token.token,
       company: token.tokenName,
       price: priceValue,
       change: finalChangeValue,
       changePercent: finalChangeValue,
-      volume: token.volume24h || '$0',
-      marketCap: token.marketCap || '$0',
+      volume: token.volume24h || "$0",
+      marketCap: token.marketCap || "$0",
       previousClose: priceValue,
       open: priceValue,
     };
   };
 
   // Convert live data for table display
-  const tokenData = tableViewData.map(convertTokenToTableFormat);
+  const tokenData = React.useMemo(
+    () => tableViewData.map(convertTokenToTableFormat),
+    [tableViewData]
+  );
 
-  
   // Major stats with the exact data you provided
   // const majorStats = [
   //   {
@@ -228,8 +137,8 @@ export default function HomeScreen() {
   //     color: "#8B5CF6",
   //   },
   // ];
-  
-  const majorStats = filteredData?.data?.otherData?.majorCardDetails || [];
+
+  const majorStats = (filteredData as any)?.data?.otherData?.majorCardDetails || [];
 
   // Add icon and color mapping for live data to match dummy data styling
   const getMajorStatWithIconAndColor = (stat: any) => {
@@ -240,8 +149,11 @@ export default function HomeScreen() {
       "Total Liquidity": { icon: "water", color: "#8B5CF6" },
     };
 
-    const mapping = iconColorMap[stat.title] || { icon: "stats-chart", color: "#6B7280" };
-    
+    const mapping = iconColorMap[stat.title] || {
+      icon: "stats-chart",
+      color: "#6B7280",
+    };
+
     return {
       ...stat,
       icon: mapping.icon,
@@ -249,8 +161,10 @@ export default function HomeScreen() {
     };
   };
 
-  const enhancedMajorStats = majorStats.map(getMajorStatWithIconAndColor);
-
+  const enhancedMajorStats = React.useMemo(
+    () => majorStats.map(getMajorStatWithIconAndColor),
+    [majorStats]
+  );
 
   const [heatmapFilter, setHeatmapFilter] = useState("all");
 
@@ -338,143 +252,137 @@ export default function HomeScreen() {
     </View>
   );
 
-  const renderTableRow = (stock: tokenData, index: number) => (
-    <View
-      key={index}
-      className={`flex-row px-5 py-4 border-b ${
-        theme === "dark" ? "border-gray-900" : "border-gray-200"
-      }`}
-    >
-      <View className="flex-1 justify-center">
-        <View className="flex-row items-center gap-2">
-
-          <View>
-            <Text
-              className={`${
-                theme === "dark" ? "text-white" : "text-gray-900"
-              } text-sm font-semibold`}
-            >
-              {stock.symbol}
-            </Text>
-            <Text
-              className={`${
-                theme === "dark" ? "text-gray-400" : "text-gray-600"
-              } text-xs`}
-            >
-              {stock.company}
-            </Text>
+  const renderTableRow = React.useCallback(
+    (stock: TableTokenData, index: number) => (
+      <View
+        key={index}
+        className={`flex-row px-5 py-4 border-b ${
+          theme === "dark" ? "border-gray-900" : "border-gray-200"
+        }`}
+      >
+        <View className="flex-1 justify-center">
+          <View className="flex-row items-center gap-2">
+            <View>
+              <Text
+                className={`${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                } text-sm font-semibold`}
+              >
+                {stock.symbol}
+              </Text>
+              <Text
+                className={`${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                } text-xs`}
+              >
+                {stock.company}
+              </Text>
+            </View>
           </View>
         </View>
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className={`${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            } text-sm font-medium`}
+          >
+            ${stock.price}
+          </Text>
+        </View>
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className={`text-sm font-medium ${
+              stock.change > 0 ? "text-green-400" : "text-red-400"
+            }`}
+          >
+            {stock.change > 0 ? "+" : ""}
+            {stock.change}
+          </Text>
+          <Text
+            className={`text-xs ${
+              stock.change > 0 ? "text-green-400" : "text-red-400"
+            }`}
+          >
+            ({stock.change > 0 ? "+" : ""}
+            {stock.changePercent}%)
+          </Text>
+        </View>
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className={`${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            } text-sm`}
+          >
+            {stock.volume}
+          </Text>
+        </View>
+        <View className="flex-1 justify-center items-center">
+          <Text
+            className={`${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            } text-sm`}
+          >
+            {stock.marketCap}
+          </Text>
+        </View>
       </View>
-      <View className="flex-1 justify-center items-center">
-        <Text
-          className={`${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          } text-sm font-medium`}
-        >
-          ${stock.price}
-        </Text>
-      </View>
-      <View className="flex-1 justify-center items-center">
-        <Text
-          className={`text-sm font-medium ${
-            stock.change > 0 ? "text-green-400" : "text-red-400"
-          }`}
-        >
-          {stock.change > 0 ? "+" : ""}
-          {stock.change}
-        </Text>
-        <Text
-          className={`text-xs ${
-            stock.change > 0 ? "text-green-400" : "text-red-400"
-          }`}
-        >
-          ({stock.change > 0 ? "+" : ""}
-          {stock.changePercent}%)
-        </Text>
-      </View>
-      <View className="flex-1 justify-center items-center">
-        <Text
-          className={`${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          } text-sm`}
-        >
-          {stock.volume}
-        </Text>
-      </View>
-      <View className="flex-1 justify-center items-center">
-        <Text
-          className={`${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          } text-sm`}
-        >
-          {stock.marketCap}
-        </Text>
-      </View>
-    </View>
+    ),
+    [theme]
   );
 
-  const renderHeatmapView = () => {
+  const tokenDataRaw = (filteredData as any)?.data?.tableData || [];
 
-    const tokenData = filteredData?.data?.tableData || [];
-
-    const convertToHeatmapData = (rawTokenData: RawTokenData[]) => {
-      return rawTokenData.map((token: RawTokenData) => {
-        // Extract market direction from change indicator
-        const hasNegativePerformance = token.change24h?.includes("↓");
-
-        // Apply correct mathematical sign to performance value
-        let adjustedPerformancePercent = Math.abs(token.change24hValue || 0);
-        if (hasNegativePerformance) {
-          adjustedPerformancePercent = -adjustedPerformancePercent;
-        }
-
-        // Return professionally structured data
-        return {
-          symbol: token.token,
-          marketCapitalization: token.marketCap,
-          marketCapValue: token.marketCapValue,
-          dailyPerformancePercent: adjustedPerformancePercent,
-          holderCount: token.holders,
-        };
-      });
-    };
-
-    const getFilteredTokenData = () => {
-      const transformedData = convertToHeatmapData(tokenData);
-
-      switch (heatmapFilter) {
-        case "advancing":
-          return transformedData
-            .filter((token: any) => token.dailyPerformancePercent > 0)
-            .sort(
-              (a: any, b: any) =>
-                b.dailyPerformancePercent - a.dailyPerformancePercent
-            );
-
-        case "declining":
-          return transformedData
-            .filter((token) => token.dailyPerformancePercent < 0)
-            .sort(
-              (a, b) => a.dailyPerformancePercent - b.dailyPerformancePercent
-            );
-
-        default:
-          return transformedData.sort(
-            (a, b) => b.marketCapValue - a.marketCapValue
-          );
+  const heatmapData = React.useMemo(() => {
+    return tokenDataRaw.map((token: RawTokenData) => {
+      const hasNegativePerformance = token.change24h?.includes("↓");
+      let adjustedPerformancePercent = Math.abs(token.change24hValue || 0);
+      if (hasNegativePerformance) {
+        adjustedPerformancePercent = -adjustedPerformancePercent;
       }
-    };
+      return {
+        symbol: token.token,
+        marketCapitalization: token.marketCap,
+        marketCapValue: token.marketCapValue,
+        dailyPerformancePercent: adjustedPerformancePercent,
+        holderCount: token.holders,
+      };
+    });
+  }, [tokenDataRaw]);
 
-    const filteredTokenData = getFilteredTokenData();
+  const filteredHeatmapData = React.useMemo(() => {
+    switch (heatmapFilter) {
+      case "advancing":
+        return heatmapData
+          .filter((token: any) => token.dailyPerformancePercent > 0)
+          .sort(
+            (a: any, b: any) =>
+              b.dailyPerformancePercent - a.dailyPerformancePercent
+          );
+      case "declining":
+        return heatmapData
+          .filter((token: any) => token.dailyPerformancePercent < 0)
+          .sort(
+            (a: any, b: any) => a.dailyPerformancePercent - b.dailyPerformancePercent
+          );
+      default:
+        return heatmapData.sort((a: any, b: any) => b.marketCapValue - a.marketCapValue);
+    }
+  }, [heatmapData, heatmapFilter]);
 
+  const renderHeatmapView = () => {
+    // Use filteredHeatmapData instead of recalculating
     // Professional size calculation based on market capitalization
+    const maxMarketCap =
+      heatmapData.length > 0
+        ? Math.max(...heatmapData.map((t:any) => t.marketCapValue))
+        : 1;
+    const minMarketCap =
+      heatmapData.length > 0
+        ? Math.min(...heatmapData.map((t:any) => t.marketCapValue))
+        : 0;
     const calculateTokenBoxSize = (marketCapValue: number) => {
-      const transformedData = convertToHeatmapData(tokenData);
-      const maxMarketCap = Math.max(...tokenData.map((t) => t.marketCapValue));
-      const minMarketCap = Math.min(...tokenData.map((t) => t.marketCapValue));
       const sizeRatio =
-        (marketCapValue - minMarketCap) / (maxMarketCap - minMarketCap);
+        (marketCapValue - minMarketCap) / (maxMarketCap - minMarketCap || 1);
       const calculatedSize = 50 + sizeRatio * 40; // 50px to 90px
       return { width: calculatedSize, height: calculatedSize };
     };
@@ -487,11 +395,11 @@ export default function HomeScreen() {
       return "#DC2626"; // Strong negative performance
     };
 
-    const advancingTokens = filteredTokenData.filter(
-      (t) => t.dailyPerformancePercent > 0
+    const advancingTokens = filteredHeatmapData.filter(
+      (t:any) => t.dailyPerformancePercent > 0
     ).length;
-    const decliningTokens = filteredTokenData.filter(
-      (t) => t.dailyPerformancePercent < 0
+    const decliningTokens = filteredHeatmapData.filter(
+      (t:any) => t.dailyPerformancePercent < 0
     ).length;
 
     return (
@@ -514,7 +422,7 @@ export default function HomeScreen() {
               theme === "dark" ? "text-gray-400" : "text-gray-600"
             } text-sm mt-1`}
           >
-            {filteredTokenData.length} tokens • 24h market data
+            {filteredHeatmapData.length} tokens • 24h market data
           </Text>
         </View>
 
@@ -577,7 +485,7 @@ export default function HomeScreen() {
 
         {/* Professional Heatmap Visualization */}
         <View className="flex-row flex-wrap justify-center">
-          {filteredTokenData.map((tokenData, index) => {
+          {filteredHeatmapData.map((tokenData:any, index:number) => {
             const boxDimensions = calculateTokenBoxSize(
               tokenData.marketCapValue
             );
@@ -657,7 +565,11 @@ export default function HomeScreen() {
     <SafeAreaView
       className={`flex-1 ${theme === "dark" ? "bg-black" : "bg-white"}`}
     >
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
         {/* Header */}
         <View className="flex-row justify-between items-center px-5 py-4">
           <Text
@@ -705,7 +617,7 @@ export default function HomeScreen() {
         {/* Global Stats */}
         <View className="px-5 mb-6">
           <View className="flex-row justify-between">
-            {globalStats.map((stat, index) => (
+            {globalStats.map((stat: any, index: number) => (
               <View
                 key={index}
                 className={`flex-1 ${
@@ -739,23 +651,6 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Search Bar */}
-        <View
-          className={`flex-row items-center ${
-            theme === "dark" ? "bg-gray-900" : "bg-gray-100"
-          } mx-5 my-4 px-4 py-3 rounded-full`}
-        >
-          <Ionicons name="search" size={20} color={colors.gray} />
-          <TextInput
-            className={`flex-1 ml-3 ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            } text-base`}
-            placeholder="Search something here ..."
-            placeholderTextColor={colors.gray}
-          />
-        </View>
-
-        {/* Major Market Stats (replacing Featured Stocks) */}
         <View className="flex-row justify-between items-center px-5 my-4">
           <Text
             className={`${
@@ -780,7 +675,9 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           className="pl-5"
         >
-          {enhancedMajorStats.map((stat, index) => renderMajorStatCard(stat, index))}
+          {enhancedMajorStats.map((stat: any, index: number) =>
+            renderMajorStatCard(stat, index)
+          )}
         </ScrollView>
 
         {/* View Toggle */}
@@ -838,6 +735,7 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+
         {activeView === "Table View" ? (
           <>
             {/* Table Header */}
@@ -893,8 +791,18 @@ export default function HomeScreen() {
               </View>
             </View>
 
-            {/* Table Rows - using original token data */}
-            {tokenData.map((token, index) => renderTableRow(token, index))}
+            {/* <FlatList
+              data={tokenData}
+              keyExtractor={(item, idx) =>
+                item.token ? String(item.token) : `token-${idx}`
+              }
+              renderItem={({ item, index }) => renderTableRow(item, index)}
+            /> */}
+            <FlatList
+              data={tokenData}
+              keyExtractor={(item) => String(item.token)}
+              renderItem={({ item, index }) => renderTableRow(item, index)}
+            />
           </>
         ) : (
           renderHeatmapView()

@@ -47,12 +47,11 @@ export default function IndividualToken() {
   const [activeTab, setActiveTab] = useState("overview");
   const [displayPrice, setDisplayPrice] = useState("");
   const [displayDate, setDisplayDate] = useState("");
-  const [isInteracting, setIsInteracting] = useState(false); // ✅ Add this state
-  // const { passingtokenData } = useLocalSearchParams();
+  const [isInteracting, setIsInteracting] = useState(false); 
   const params = useLocalSearchParams();
   const { passingtokenData } = params;
 
-  const [tokenData, setTokenData] = useState({});
+  const [tokenData, setTokenData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   console.log("Passing token data:", passingtokenData);
@@ -66,11 +65,13 @@ export default function IndividualToken() {
         setLoading(false);
         return;
       }
-      const parsedTokenData = JSON.parse(passingtokenData);
+      const parsedTokenData = JSON.parse(
+        Array.isArray(passingtokenData) ? passingtokenData[0] : passingtokenData
+      );
       try {
         setLoading(true);
         const res = await fetch(
-          `http://${process.env.EXPO_SERVER_URL}:3000/api/individualTokenData`, 
+          `https://l7s75wk0-3000.inc1.devtunnels.ms//api/individualTokenData`, 
           {
             method: "POST",
             headers: {
@@ -96,41 +97,13 @@ export default function IndividualToken() {
     fetchingData();
   }, [passingtokenData]);
   
-  
-  // const aggregateHourlyData = (hourlyData: any[], hours: number) => {
-  //   const aggregatedData: any[] = [];
-
-  //   // Sort data by timestamp (oldest first)
-  //   const sortedData = [...hourlyData].sort(
-  //     (a, b) =>
-  //       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-  //   );
-
-  //   for (let i = 0; i < sortedData.length; i += hours) {
-  //     const chunk = sortedData.slice(i, i + hours);
-  //     if (chunk.length === 0) continue;
-
-  //     const aggregated = {
-  //       timestamp: chunk[0].timestamp, // Use first timestamp of the period
-  //       open: chunk[0].open,
-  //       close: chunk[chunk.length - 1].close,
-  //       high: Math.max(...chunk.map((d) => d.high)),
-  //       low: Math.min(...chunk.map((d) => d.low)),
-  //       volume: chunk.reduce((sum, d) => sum + d.volume, 0),
-  //     };
-  //     aggregatedData.push(aggregated);
-  //   }
-
-  //   return aggregatedData;
-  // };
-
   // Helper function to get data based on timeframe
 
-  // console.log("Token Data:", tokenData);
   const getTimeframeData = (timeframe: string) => {
     if (!tokenData || !tokenData.ohlcData) return []; 
-    const { hours, days } = tokenData.ohlcData;
-
+    const hours = tokenData.ohlcData.hours || [];
+    const days = tokenData.ohlcData.days || [];
+  
     switch (timeframe) {
       case "3H":
         return [...hours].slice(0, 4).reverse();
@@ -193,7 +166,7 @@ export default function IndividualToken() {
         timestamp: entry.timestamp,
         date: entry.timestamp,
       }));
-  }, [selectedTimeframe]);
+  }, [selectedTimeframe, tokenData]);
 
   const { state: chartPressState, isActive: isChartPressed } =
     useChartPressState(initChartPressState);
@@ -205,29 +178,12 @@ export default function IndividualToken() {
     }
   }, [isChartPressed]);
 
-  // const activeDate = useDerivedValue(() => {
-  //   if (!isChartPressed) return "Touch the chart to see details";
-
-  //   const index = Math.round(chartPressState.x.value.value);
-  //   if (index >= 0 && index < chartData.length) {
-  //     const date = new Date(chartData[index].timestamp);
-
-  //     // Format date based on timeframe
-  //     if (selectedTimeframe === "3H") {
-  //       return date.toLocaleString(); // Show date and time for hourly
-  //     } else {
-  //       return date.toLocaleDateString(); // Show date only for others
-  //     }
-  //   }
-  //   return "";
-  // });
-
   useDerivedValue(() => {
     if (isChartPressed) {
       const price = chartPressState.y.price.value.value;
       const index = Math.round(chartPressState.x.value.value);
   
-      runOnJS(setDisplayPrice)(`$${price.toFixed(4)}`);
+      runOnJS(setDisplayPrice)(`$${price?.toFixed(4)}`);
       runOnJS(setIsInteracting)(true);
   
       // Set the date with both date and time for all timeframes
@@ -241,7 +197,7 @@ export default function IndividualToken() {
       // ✅ Don't reset immediately - keep last values visible
       if (!isInteracting) {
         const fallbackPrice = chartData[chartData.length - 1]?.price || 0;
-        runOnJS(setDisplayPrice)(`$${fallbackPrice.toFixed(4)}`);
+        runOnJS(setDisplayPrice)(`$${fallbackPrice?.toFixed(4)}`);
   
         if (chartData.length > 0) {
           const latestDate = new Date(
@@ -254,40 +210,6 @@ export default function IndividualToken() {
       }
     }
   });
-  
-  // useEffect(() => {
-  //   let timeout: NodeJS.Timeout;
-
-  //   if (!isChartPressed && isInteracting) {
-  //     // Reset to latest values after 2 seconds of no interaction
-  //     timeout = setTimeout(() => {
-  //       setIsInteracting(false);
-  //       const fallbackPrice = chartData[chartData.length - 1]?.price || 0;
-  //       setDisplayPrice(`$${fallbackPrice.toFixed(4)}`);
-
-  //       if (chartData.length > 0) {
-  //         const latestDate = new Date(
-  //           chartData[chartData.length - 1].timestamp
-  //         );
-  //         const formattedDate = latestDate.toLocaleString()
-  //         setDisplayDate(formattedDate);
-  //       }
-  //     }, 2000);
-  //   }
-
-  //   return () => {
-  //     if (timeout) clearTimeout(timeout);
-  //   };
-  // }, [isChartPressed, isInteracting, chartData, selectedTimeframe]);
-
-  // Style for the active price display
-  // const activePriceStyle = useAnimatedStyle<TextStyle>(() => {
-  //   return {
-  //     fontSize: 24,
-  //     fontWeight: "bold",
-  //     color: theme === "dark" ? "#ffffff" : "#000000",
-  //   };
-  // });
 
   if (loading) {
     return (
@@ -306,13 +228,12 @@ export default function IndividualToken() {
   }
   
 
-
   // Helper functions
   const formatNumber = (num: number, decimals = 2) => {
-    if (num >= 1e9) return (num / 1e9).toFixed(decimals) + "B";
-    if (num >= 1e6) return (num / 1e6).toFixed(decimals) + "M";
-    if (num >= 1e3) return (num / 1e3).toFixed(decimals) + "K";
-    return num.toFixed(decimals);
+    if (num >= 1e9) return (num / 1e9)?.toFixed(decimals) + "B";
+    if (num >= 1e6) return (num / 1e6)?.toFixed(decimals) + "M";
+    if (num >= 1e3) return (num / 1e3)?.toFixed(decimals) + "K";
+    return num?.toFixed(decimals);
   };
 
   const formatCurrency = (amount: string | number) => {
@@ -334,8 +255,6 @@ export default function IndividualToken() {
   // Chart Area Component
   const PriceArea = ({
     points,
-    left,
-    right,
     top,
     bottom,
   }: {
@@ -409,11 +328,25 @@ export default function IndividualToken() {
     );
   };
 
-  const renderTradingActivity = () => (
+  const renderTradingActivity = () => {
+    const last24h = tokenData?.tradingActivity?.last24h || {};
+    const hasData =
+      last24h &&
+      (last24h.totalTrades ||
+        last24h.uniqueWallets ||
+        last24h.buys ||
+        last24h.sells);
+  
+    return(
     <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-semibold mb-4`}>
         Trading Activity (24h)
       </Text>
+      {!hasData ? (
+        <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-center`}>
+          No data available
+        </Text>
+      ) : (
 
       <View className="grid grid-cols-2 gap-4">
         <View className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} p-4 rounded-xl`}>
@@ -452,8 +385,9 @@ export default function IndividualToken() {
           </Text>
         </View>
       </View>
+      )}
     </View>
-  );
+  )};
 
 
   // Main chart render function
@@ -465,7 +399,7 @@ export default function IndividualToken() {
       if (chartData.length === 0)
         return {
           tickCount: 5,
-          formatYLabel: (v: number) => `$${v.toFixed(4)}`,
+          formatYLabel: (v: number) => `$${v?.toFixed(4)}`,
         };
 
       const prices = chartData.map((d) => d.price);
@@ -502,17 +436,30 @@ export default function IndividualToken() {
         tickCount,
         formatYLabel: (v: number) => {
           // Format based on value magnitude
-          if (v < 0.001) return `$${v.toFixed(6)}`;
-          if (v < 0.01) return `$${v.toFixed(5)}`;
-          if (v < 0.1) return `$${v.toFixed(4)}`;
-          if (v < 1) return `$${v.toFixed(3)}`;
-          return `$${v.toFixed(2)}`;
+          if (v < 0.001) return `$${v?.toFixed(6)}`;
+          if (v < 0.01) return `$${v?.toFixed(5)}`;
+          if (v < 0.1) return `$${v?.toFixed(4)}`;
+          if (v < 1) return `$${v?.toFixed(3)}`;
+          return `$${v?.toFixed(2)}`;
         },
       };
     };
 
     const yAxisConfig = getYAxisConfig();
 
+    if (!chartData || chartData.length === 0) {
+      return (
+        <View className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}>
+          <Text className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}>
+            Price Chart
+          </Text>
+          <Text className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-center`}>
+            No data available
+          </Text>
+        </View>
+      );
+    }
+  
     return (
       <View
         className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
@@ -680,8 +627,6 @@ export default function IndividualToken() {
     );
   };
 
-  // ... rest of your existing render functions remain the same ...
-
   const renderHeader = () => (
     <View
       className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"} border-b ${theme === "dark" ? "border-gray-800" : "border-gray-200"}`}
@@ -728,7 +673,7 @@ export default function IndividualToken() {
         <Text
           className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-3xl font-bold mb-2`}
         >
-          {formatCurrency(tokenData.livepriceData.currentPrice)}
+          {formatCurrency(tokenData?.livepriceData?.currentPrice)}
         </Text>
 
         <View className="flex-row items-center gap-4">
@@ -741,10 +686,10 @@ export default function IndividualToken() {
               </Text>
               <Text
                 className={`text-xs font-medium`}
-                style={{ color: getPerformanceColor(value) }}
+                style={{ color: getPerformanceColor(Number(value)) }}
               >
-                {value > 0 ? "+" : ""}
-                {value}%
+                {Number(value) > 0 ? "+" : ""}
+                {Number(value)}%
               </Text>
             </View>
           ))}
@@ -759,10 +704,27 @@ export default function IndividualToken() {
           Trade on Believe
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        className="bg-blue-500 py-3 rounded-xl mb-4"
+        onPress={() => {
+          const tradeCA = tokenData.basicInfo.tradeUrl;
+          let address = "";
+          try {
+        address = tradeCA.split('/t/')[1].split('/@')[0];
+          } catch (e) {
+        address = "";
+          }
+          if (address) {
+        openLink(`https://www.believescreener.com/portfolio/${address}`);
+          }
+        }}
+      >
+        <Text className="text-white text-center font-semibold text-base">
+          See Believe Portfolio
+        </Text>
+      </TouchableOpacity>
     </View>
   );
-
-  // ... include all your other existing render functions (renderMarketStats, renderTradingActivity, etc.) ...
 
   const renderMarketStats = () => (
     <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
@@ -776,7 +738,7 @@ export default function IndividualToken() {
             Market Cap
           </Text>
           <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
-            {formatCurrency(tokenData.performanceData.marketCap)}
+            {formatCurrency(tokenData?.performanceData?.marketCap)}
           </Text>
         </View>
 
@@ -785,7 +747,7 @@ export default function IndividualToken() {
             24h Volume
           </Text>
           <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
-            {formatCurrency(tokenData.performanceData.volume)}
+            {formatCurrency(tokenData?.performanceData?.volume)}
           </Text>
         </View>
 
@@ -794,7 +756,7 @@ export default function IndividualToken() {
             Liquidity
           </Text>
           <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
-            {formatCurrency(tokenData.performanceData.liquidity)}
+            {formatCurrency(tokenData?.performanceData?.liquidity)}
           </Text>
         </View>
 
@@ -803,7 +765,7 @@ export default function IndividualToken() {
             24h High
           </Text>
           <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
-            {formatCurrency(tokenData.dailyPriceSummary.highPrice)}
+            {formatCurrency(tokenData?.dailyPriceSummary?.highPrice)}
           </Text>
         </View>
 
@@ -812,14 +774,12 @@ export default function IndividualToken() {
             24h Low
           </Text>
           <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
-            {formatCurrency(tokenData.dailyPriceSummary.lowPrice)}
+            {formatCurrency(tokenData?.dailyPriceSummary?.lowPrice)}
           </Text>
         </View>
       </View>
     </View>
   );
-
-
 
   const renderSocialLinks = () => (
     <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
@@ -828,7 +788,8 @@ export default function IndividualToken() {
       </Text>
 
       <View className="space-y-3">
-        {tokenData.socialLinks.websites.map((website, index) => (
+        {tokenData.socialLinks.websites.map(
+          (website: { label: string; url: string }, index: number) => (
           <TouchableOpacity
             key={index}
             className={`flex-row items-center p-3 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} rounded-xl`}
@@ -842,23 +803,28 @@ export default function IndividualToken() {
           </TouchableOpacity>
         ))}
 
-        {tokenData.socialLinks.socials.map((social, index) => (
-          <TouchableOpacity
-            key={index}
-            className={`flex-row items-center p-3 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} rounded-xl`}
-            onPress={() => openLink(social.url)}
-          >
-            <Ionicons
-              name={social.type === 'twitter' ? 'logo-twitter' : 'link-outline'}
-              size={20}
-              color={social.type === 'twitter' ? '#1DA1F2' : colors.text}
-            />
-            <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} ml-3 flex-1`}>
-              {social.type.charAt(0).toUpperCase() + social.type.slice(1)}
-            </Text>
-            <Ionicons name="chevron-forward" size={16} color={theme === 'dark' ? '#6B7280' : '#9CA3AF'} />
-          </TouchableOpacity>
-        ))}
+        {tokenData.socialLinks.socials.map(
+          (
+            social: { type: string; url: string },
+            index: number
+          ) => (
+            <TouchableOpacity
+              key={index}
+              className={`flex-row items-center p-3 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} rounded-xl`}
+              onPress={() => openLink(social.url)}
+            >
+              <Ionicons
+                name={social.type === 'twitter' ? 'logo-twitter' : 'link-outline'}
+                size={20}
+                color={social.type === 'twitter' ? '#1DA1F2' : colors.text}
+              />
+              <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} ml-3 flex-1`}>
+                {social.type.charAt(0).toUpperCase() + social.type.slice(1)}
+              </Text>
+              <Ionicons name="chevron-forward" size={16} color={theme === 'dark' ? '#6B7280' : '#9CA3AF'} />
+            </TouchableOpacity>
+          )
+        )}
       </View>
     </View>
   );

@@ -3,12 +3,13 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { useTheme } from '@/hooks/useTheme';
 import { Tabs } from "expo-router";
-import React from "react";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
     const { theme } = useTheme();
     const colors = Colors[theme];
-  
+    const insets = useSafeAreaInsets(); 
+
     return (
         <Tabs
           screenOptions={{
@@ -21,8 +22,8 @@ export default function TabLayout() {
               borderTopWidth: 0,
               elevation: 0,
               shadowOpacity: 0,
-              height: 65,
-              paddingBottom: 15,
+              height: 65 + insets.bottom,
+              paddingBottom: 15 + insets.bottom,
               paddingTop: 8,
             },
             tabBarLabelStyle: {
@@ -47,7 +48,7 @@ export default function TabLayout() {
           <Tabs.Screen
             name="new_Launch"
             options={{
-              title: 'FlowBox',
+              title: 'New Launch',
               tabBarIcon: ({ color }) => <IconSymbol size={24} name="cube.box.fill" color={color} />,
             }}
           />
