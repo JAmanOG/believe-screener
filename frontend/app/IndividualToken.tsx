@@ -9,7 +9,7 @@ import {
   vec,
 } from "@shopify/react-native-skia";
 import * as Haptics from "expo-haptics";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -17,12 +17,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import {
   runOnJS,
   useDerivedValue,
-  type SharedValue
+  type SharedValue,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -34,7 +34,7 @@ import {
   type PointsArray,
 } from "victory-native";
 // import tokenData from "./data.json";
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
@@ -47,14 +47,96 @@ export default function IndividualToken() {
   const [activeTab, setActiveTab] = useState("overview");
   const [displayPrice, setDisplayPrice] = useState("");
   const [displayDate, setDisplayDate] = useState("");
-  const [isInteracting, setIsInteracting] = useState(false); 
+  const [isInteracting, setIsInteracting] = useState(false);
   const params = useLocalSearchParams();
   const { passingtokenData } = params;
+  const router = useRouter();
 
   const [tokenData, setTokenData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log("Passing token data:", passingtokenData);
+  // console.log("Passing token data:", passingtokenData);
+
+    // Helper function to get data based on timeframe
+
+    const { state: chartPressState, isActive: isChartPressed } =
+    useChartPressState(initChartPressState);
+
+    const getTimeframeData = (timeframe: string) => {
+      if (!tokenData || !tokenData.ohlcData) return [];
+      const hours = tokenData.ohlcData.hours || [];
+      const days = tokenData.ohlcData.days || [];
+  
+      switch (timeframe) {
+        case "3H":
+          return [...hours].slice(0, 4).reverse();
+  
+        case "6H":
+          return [...hours].slice(0, 7).reverse();
+  
+        case "12H":
+          return [...hours].slice(0, 13).reverse();
+  
+        case "1D":
+          return [...hours].slice(0, 25).reverse();
+  
+        case "1W":
+          return [...days].slice(0, 8).reverse();
+  
+        case "1M":
+          return [...days].slice(0, 31).reverse();
+  
+        case "MAX":
+          const allData = [...hours, ...days];
+  
+          const uniqueData = allData.filter(
+            (item, index, arr) =>
+              arr.findIndex((t) => t.timestamp === item.timestamp) === index
+          );
+  
+          return uniqueData.sort(
+            (a, b) =>
+              new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+          );
+        default:
+          return [...days].reverse();
+      }
+    };
+  
+
+    const chartData = React.useMemo(() => {
+      console.log("Selected timeframe:", selectedTimeframe);
+  
+      // Get data based on selected timeframe
+      const rawData = getTimeframeData(selectedTimeframe);
+  
+      console.log("Raw data length:", rawData);
+      console.log(`${selectedTimeframe} data length:`, rawData?.length);
+      console.log(`${selectedTimeframe} first entry (newest):`, rawData[0]);
+      console.log(
+        `${selectedTimeframe} last entry (oldest):`,
+        rawData[rawData?.length - 1]
+      );
+  
+      return rawData
+        .slice() // create a copy
+        .map((entry, index) => ({
+          x: index,
+          price: entry.close,
+          open: entry.open,
+          high: entry.high,
+          low: entry.low,
+          volume: entry.volume,
+          timestamp: entry.timestamp,
+          date: entry.timestamp,
+        }));
+    }, [selectedTimeframe, tokenData]);
+  
+    const handleBack = React.useCallback(() => {
+      Haptics.selectionAsync();
+      router.back();
+    }, [router]);
+  
 
   useEffect(() => {
     const fetchingData = async () => {
@@ -71,18 +153,18 @@ export default function IndividualToken() {
       try {
         setLoading(true);
         const res = await fetch(
-          `https://l7s75wk0-3000.inc1.devtunnels.ms//api/individualTokenData`, 
+          `https://believerappbackend.yellowbeach-624b30e5.centralindia.azurecontainerapps.io/api/individualTokenData`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({tokenData: parsedTokenData}),
+            body: JSON.stringify({ tokenData: parsedTokenData }),
           }
         );
         const data = await res.json();
         console.log("Fetched token data:", data.data);
-        if (data && data.ohlcData && data.tradingActivity,data !== null) {
+        if ((data && data.ohlcData && data.tradingActivity, data !== null)) {
           setTokenData(data.data);
         } else {
           setTokenData(null);
@@ -93,141 +175,74 @@ export default function IndividualToken() {
         setLoading(false);
       }
     };
-  
+
     fetchingData();
   }, [passingtokenData]);
-  
-  // Helper function to get data based on timeframe
 
-  const getTimeframeData = (timeframe: string) => {
-    if (!tokenData || !tokenData.ohlcData) return []; 
-    const hours = tokenData.ohlcData.hours || [];
-    const days = tokenData.ohlcData.days || [];
-  
-    switch (timeframe) {
-      case "3H":
-        return [...hours].slice(0, 4).reverse();
-
-      case "6H":
-        return [...hours].slice(0, 7).reverse();
-
-      case "12H":
-        return [...hours].slice(0, 13).reverse();
-
-      case "1D":
-        return [...hours].slice(0, 25).reverse();
-
-      case "1W":
-        return [...days].slice(0, 8).reverse();
-
-      case "1M":
-        return [...days].slice(0, 31).reverse();
-
-      case "MAX":
-        const allData = [...hours, ...days];
-
-        const uniqueData = allData.filter(
-          (item, index, arr) =>
-            arr.findIndex((t) => t.timestamp === item.timestamp) === index
-        );
-
-        return uniqueData.sort(
-          (a, b) =>
-            new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-        );
-      default:
-        return [...days].reverse();
-    }
-  };
-
-  const chartData = useMemo(() => {
-    console.log("Selected timeframe:", selectedTimeframe);
-
-    // Get data based on selected timeframe
-    const rawData = getTimeframeData(selectedTimeframe);
-
-    console.log("Raw data length:", rawData);
-    console.log(`${selectedTimeframe} data length:`, rawData.length);
-    console.log(`${selectedTimeframe} first entry (newest):`, rawData[0]);
-    console.log(
-      `${selectedTimeframe} last entry (oldest):`,
-      rawData[rawData.length - 1]
-    );
-
-    return rawData
-      .slice() // create a copy
-      .map((entry, index) => ({
-        x: index,
-        price: entry.close,
-        open: entry.open,
-        high: entry.high,
-        low: entry.low,
-        volume: entry.volume,
-        timestamp: entry.timestamp,
-        date: entry.timestamp,
-      }));
-  }, [selectedTimeframe, tokenData]);
-
-  const { state: chartPressState, isActive: isChartPressed } =
-    useChartPressState(initChartPressState);
-
-  // On activation of gesture, play haptic feedback
-  useEffect(() => {
-    if (isChartPressed) {
-      Haptics.selectionAsync().catch(() => null);
-    }
-  }, [isChartPressed]);
-
-  useDerivedValue(() => {
-    if (isChartPressed) {
-      const price = chartPressState.y.price.value.value;
-      const index = Math.round(chartPressState.x.value.value);
-  
-      runOnJS(setDisplayPrice)(`$${price?.toFixed(4)}`);
-      runOnJS(setIsInteracting)(true);
-  
-      // Set the date with both date and time for all timeframes
-      if (index >= 0 && index < chartData.length) {
-        const date = new Date(chartData[index].timestamp);
-        // Always show both date and time
-        const formattedDate = date.toLocaleString();
-        runOnJS(setDisplayDate)(formattedDate);
+    // On activation of gesture, play haptic feedback
+    useEffect(() => {
+      if (isChartPressed) {
+        Haptics.selectionAsync().catch(() => null);
       }
-    } else {
-      // ✅ Don't reset immediately - keep last values visible
-      if (!isInteracting) {
-        const fallbackPrice = chartData[chartData.length - 1]?.price || 0;
-        runOnJS(setDisplayPrice)(`$${fallbackPrice?.toFixed(4)}`);
-  
-        if (chartData.length > 0) {
-          const latestDate = new Date(
-            chartData[chartData.length - 1].timestamp
-          );
-          // Always show both date and time for fallback as well
-          const formattedDate = latestDate.toLocaleString();
-          runOnJS(setDisplayDate)(formattedDate);
+    }, [isChartPressed]);
+
+    useDerivedValue(() => {
+      let price, formattedDate;
+      
+      if (isChartPressed && chartData?.length > 0) {
+        price = chartPressState.y.price.value.value;
+        const index = Math.round(chartPressState.x.value.value);
+        
+        if (index >= 0 && index < chartData.length) {
+          const date = new Date(chartData[index].timestamp);
+          formattedDate = date.toLocaleString();
+        }
+      } else {
+        price = chartData?.[chartData.length - 1]?.price || 0;
+        if (chartData?.length > 0) {
+          const latestDate = new Date(chartData[chartData.length - 1].timestamp);
+          formattedDate = latestDate.toLocaleString();
         }
       }
+      
+      // Always call the same runOnJS functions
+      runOnJS(setDisplayPrice)(`$${price?.toFixed(4) || '0.0000'}`);
+      runOnJS(setIsInteracting)(isChartPressed);
+      if (formattedDate) {
+        runOnJS(setDisplayDate)(formattedDate);
+      }
+    },[isChartPressed, chartData]);
+
+    if (loading) {
+      return (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: colors.background,
+          }}
+        >
+          <Text style={{ color: colors.text }}>Loading...</Text>
+        </SafeAreaView>
+      );
     }
-  });
-
-  if (loading) {
-    return (
-      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background }}>
-        <Text style={{ color: colors.text }}>Loading...</Text>
-      </SafeAreaView>
-    );
-  }
   
-  if (!tokenData) {
-    return (
-      <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.background }}>
-        <Text style={{ color: colors.text }}>Failed to load token data.</Text>
-      </SafeAreaView>
-    );
-  }
+    if (!tokenData) {
+      return (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: colors.background,
+          }}
+        >
+          <Text style={{ color: colors.text }}>Failed to load token data.</Text>
+        </SafeAreaView>
+      );
+    }
   
-
   // Helper functions
   const formatNumber = (num: number, decimals = 2) => {
     if (num >= 1e9) return (num / 1e9)?.toFixed(decimals) + "B";
@@ -336,59 +351,76 @@ export default function IndividualToken() {
         last24h.uniqueWallets ||
         last24h.buys ||
         last24h.sells);
-  
-    return(
-    <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-semibold mb-4`}>
-        Trading Activity (24h)
-      </Text>
-      {!hasData ? (
-        <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-center`}>
-          No data available
+
+    return (
+      <View
+        className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
+      >
+        <Text
+          className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}
+        >
+          Trading Activity (24h)
         </Text>
-      ) : (
+        {!hasData ? (
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-center`}
+          >
+            No data available
+          </Text>
+        ) : (
+          <View className="grid grid-cols-2 gap-4">
+            <View
+              className={`${theme === "dark" ? "bg-gray-800" : "bg-gray-50"} p-4 rounded-xl`}
+            >
+              <Text
+                className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs mb-1`}
+              >
+                Total Trades
+              </Text>
+              <Text
+                className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-bold`}
+              >
+                {formatNumber(tokenData.tradingActivity.last24h.totalTrades)}
+              </Text>
+            </View>
 
-      <View className="grid grid-cols-2 gap-4">
-        <View className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} p-4 rounded-xl`}>
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs mb-1`}>
-            Total Trades
-          </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-bold`}>
-            {formatNumber(tokenData.tradingActivity.last24h.totalTrades)}
-          </Text>
-        </View>
+            <View
+              className={`${theme === "dark" ? "bg-gray-800" : "bg-gray-50"} p-4 rounded-xl`}
+            >
+              <Text
+                className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs mb-1`}
+              >
+                Unique Wallets
+              </Text>
+              <Text
+                className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-bold`}
+              >
+                {formatNumber(tokenData.tradingActivity.last24h.uniqueWallets)}
+              </Text>
+            </View>
 
-        <View className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} p-4 rounded-xl`}>
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs mb-1`}>
-            Unique Wallets
-          </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-bold`}>
-            {formatNumber(tokenData.tradingActivity.last24h.uniqueWallets)}
-          </Text>
-        </View>
+            <View
+              className={`${theme === "dark" ? "bg-green-900/20" : "bg-green-50"} p-4 rounded-xl`}
+            >
+              <Text className="text-green-400 text-xs mb-1">Buys</Text>
+              <Text className="text-green-400 text-lg font-bold">
+                {formatNumber(tokenData.tradingActivity.last24h.buys)}
+              </Text>
+            </View>
 
-        <View className={`${theme === 'dark' ? 'bg-green-900/20' : 'bg-green-50'} p-4 rounded-xl`}>
-          <Text className="text-green-400 text-xs mb-1">
-            Buys
-          </Text>
-          <Text className="text-green-400 text-lg font-bold">
-            {formatNumber(tokenData.tradingActivity.last24h.buys)}
-          </Text>
-        </View>
-
-        <View className={`${theme === 'dark' ? 'bg-red-900/20' : 'bg-red-50'} p-4 rounded-xl`}>
-          <Text className="text-red-400 text-xs mb-1">
-            Sells
-          </Text>
-          <Text className="text-red-400 text-lg font-bold">
-            {formatNumber(tokenData.tradingActivity.last24h.sells)}
-          </Text>
-        </View>
+            <View
+              className={`${theme === "dark" ? "bg-red-900/20" : "bg-red-50"} p-4 rounded-xl`}
+            >
+              <Text className="text-red-400 text-xs mb-1">Sells</Text>
+              <Text className="text-red-400 text-lg font-bold">
+                {formatNumber(tokenData.tradingActivity.last24h.sells)}
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
-      )}
-    </View>
-  )};
-
+    );
+  };
 
   // Main chart render function
   const renderPriceChart = () => {
@@ -396,7 +428,7 @@ export default function IndividualToken() {
 
     // Calculate better Y-axis range and formatting
     const getYAxisConfig = () => {
-      if (chartData.length === 0)
+      if (chartData?.length === 0)
         return {
           tickCount: 5,
           formatYLabel: (v: number) => `$${v?.toFixed(4)}`,
@@ -447,19 +479,25 @@ export default function IndividualToken() {
 
     const yAxisConfig = getYAxisConfig();
 
-    if (!chartData || chartData.length === 0) {
+    if (!chartData || chartData?.length === 0) {
       return (
-        <View className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}>
-          <Text className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}>
+        <View
+          className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
+        >
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}
+          >
             Price Chart
           </Text>
-          <Text className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-center`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-center`}
+          >
             No data available
           </Text>
         </View>
       );
     }
-  
+
     return (
       <View
         className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
@@ -475,6 +513,7 @@ export default function IndividualToken() {
             horizontal
             showsHorizontalScrollIndicator={false}
             className="flex-row"
+            scrollEnabled={!isChartPressed}
           >
             {["3H", "6H", "12H", "1D", "1W", "1M", "MAX"].map((timeframe) => (
               <TouchableOpacity
@@ -555,21 +594,23 @@ export default function IndividualToken() {
             className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-bold text-center mt-1`}
           >
             {displayPrice ||
-              formatCurrency(chartData[chartData.length - 1]?.price || 0)}
+              formatCurrency(chartData[chartData?.length - 1]?.price || 0)}
           </Text>
 
           {/* ✅ Date Display */}
           <Text
             className={`${theme === "dark" ? "text-gray-300" : "text-gray-700"} text-sm text-center mt-1`}
           >
-          {displayDate ||
-            (chartData.length > 0
-              ? new Date(chartData[chartData.length - 1].timestamp).toLocaleString()
-              : "")}
+            {displayDate ||
+              (chartData?.length > 0
+                ? new Date(
+                    chartData[chartData?.length - 1].timestamp
+                  ).toLocaleString()
+                : "")}
           </Text>
 
           {/* Price range info */}
-          {chartData.length > 0 && (
+          {chartData?.length > 0 && (
             <View className="flex-row justify-between mt-2">
               <Text
                 className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs`}
@@ -596,7 +637,7 @@ export default function IndividualToken() {
           <Text
             className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs`}
           >
-            {chartData.length > 0
+            {chartData?.length > 0
               ? selectedTimeframe === "3H"
                 ? new Date(chartData[0].timestamp).toLocaleString()
                 : new Date(chartData[0].timestamp).toLocaleDateString()
@@ -605,20 +646,20 @@ export default function IndividualToken() {
           <Text
             className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs`}
           >
-            {chartData.length > 0
-              ? `${chartData.length} ${selectedTimeframe === "3H" ? "hours" : "periods"}`
+            {chartData?.length > 0
+              ? `${chartData?.length} ${selectedTimeframe === "3H" ? "hours" : "periods"}`
               : ""}
           </Text>
           <Text
             className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs`}
           >
-            {chartData.length > 0
+            {chartData?.length > 0
               ? selectedTimeframe === "3H"
                 ? new Date(
-                    chartData[chartData.length - 1].timestamp
+                    chartData[chartData?.length - 1].timestamp
                   ).toLocaleString()
                 : new Date(
-                    chartData[chartData.length - 1].timestamp
+                    chartData[chartData?.length - 1].timestamp
                   ).toLocaleDateString()
               : ""}
           </Text>
@@ -627,12 +668,16 @@ export default function IndividualToken() {
     );
   };
 
+
   const renderHeader = () => (
     <View
       className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"} border-b ${theme === "dark" ? "border-gray-800" : "border-gray-200"}`}
     >
       <View className="flex-row items-center justify-between mb-4">
-        <TouchableOpacity className="w-10 h-10 justify-center items-center">
+        <TouchableOpacity
+          onPress={handleBack}
+          className="w-10 h-10 justify-center items-center"
+        >
           <Ionicons name="arrow-back" size={24} color={colors.text} />
         </TouchableOpacity>
         <View className="flex-row gap-3">
@@ -677,7 +722,7 @@ export default function IndividualToken() {
         </Text>
 
         <View className="flex-row items-center gap-4">
-          {Object.entries(tokenData.momentumData).map(([key, value]) => (
+          {Object.entries(tokenData.momentumData ?? {}).map(([key, value]) => (
             <View key={key} className="flex-row items-center">
               <Text
                 className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-xs mr-1`}
@@ -710,12 +755,12 @@ export default function IndividualToken() {
           const tradeCA = tokenData.basicInfo.tradeUrl;
           let address = "";
           try {
-        address = tradeCA.split('/t/')[1].split('/@')[0];
+            address = tradeCA.split("/t/")[1].split("/@")[0];
           } catch (e) {
-        address = "";
+            address = "";
           }
           if (address) {
-        openLink(`https://www.believescreener.com/portfolio/${address}`);
+            openLink(`https://www.believescreener.com/portfolio/${address}`);
           }
         }}
       >
@@ -727,53 +772,77 @@ export default function IndividualToken() {
   );
 
   const renderMarketStats = () => (
-    <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-semibold mb-4`}>
+    <View
+      className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
+    >
+      <Text
+        className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}
+      >
         Market Statistics
       </Text>
 
       <View className="space-y-4">
         <View className="flex-row justify-between items-center">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             Market Cap
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} font-semibold`}
+          >
             {formatCurrency(tokenData?.performanceData?.marketCap)}
           </Text>
         </View>
 
         <View className="flex-row justify-between items-center">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             24h Volume
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} font-semibold`}
+          >
             {formatCurrency(tokenData?.performanceData?.volume)}
           </Text>
         </View>
 
         <View className="flex-row justify-between items-center">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             Liquidity
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} font-semibold`}
+          >
             {formatCurrency(tokenData?.performanceData?.liquidity)}
           </Text>
         </View>
 
         <View className="flex-row justify-between items-center">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             24h High
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} font-semibold`}
+          >
             {formatCurrency(tokenData?.dailyPriceSummary?.highPrice)}
           </Text>
         </View>
 
         <View className="flex-row justify-between items-center">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             24h Low
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-semibold`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} font-semibold`}
+          >
             {formatCurrency(tokenData?.dailyPriceSummary?.lowPrice)}
           </Text>
         </View>
@@ -782,46 +851,62 @@ export default function IndividualToken() {
   );
 
   const renderSocialLinks = () => (
-    <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-semibold mb-4`}>
+    <View
+      className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
+    >
+      <Text
+        className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}
+      >
         Social Links
       </Text>
 
       <View className="space-y-3">
-        {tokenData.socialLinks.websites.map(
+        {(tokenData.socialLinks?.websites ?? []).map(
           (website: { label: string; url: string }, index: number) => (
-          <TouchableOpacity
-            key={index}
-            className={`flex-row items-center p-3 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} rounded-xl`}
-            onPress={() => openLink(website.url)}
-          >
-            <Ionicons name="globe-outline" size={20} color={colors.text} />
-            <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} ml-3 flex-1`}>
-              {website.label}
-            </Text>
-            <Ionicons name="chevron-forward" size={16} color={theme === 'dark' ? '#6B7280' : '#9CA3AF'} />
-          </TouchableOpacity>
-        ))}
-
-        {tokenData.socialLinks.socials.map(
-          (
-            social: { type: string; url: string },
-            index: number
-          ) => (
             <TouchableOpacity
               key={index}
-              className={`flex-row items-center p-3 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'} rounded-xl`}
+              className={`flex-row items-center p-3 ${theme === "dark" ? "bg-gray-800" : "bg-gray-50"} rounded-xl`}
+              onPress={() => openLink(website?.url)}
+            >
+              <Ionicons name="globe-outline" size={20} color={colors.text} />
+              <Text
+                className={`${theme === "dark" ? "text-white" : "text-gray-900"} ml-3 flex-1`}
+              >
+                {website.label}
+              </Text>
+              <Ionicons
+                name="chevron-forward"
+                size={16}
+                color={theme === "dark" ? "#6B7280" : "#9CA3AF"}
+              />
+            </TouchableOpacity>
+          )
+        )}
+
+        {(tokenData.socialLinks?.socials ?? []).map(
+          (social: { type: string; url: string }, index: number) => (
+            <TouchableOpacity
+              key={index}
+              className={`flex-row items-center p-3 ${theme === "dark" ? "bg-gray-800" : "bg-gray-50"} rounded-xl`}
               onPress={() => openLink(social.url)}
             >
               <Ionicons
-                name={social.type === 'twitter' ? 'logo-twitter' : 'link-outline'}
+                name={
+                  social.type === "twitter" ? "logo-twitter" : "link-outline"
+                }
                 size={20}
-                color={social.type === 'twitter' ? '#1DA1F2' : colors.text}
+                color={social.type === "twitter" ? "#1DA1F2" : colors.text}
               />
-              <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} ml-3 flex-1`}>
+              <Text
+                className={`${theme === "dark" ? "text-white" : "text-gray-900"} ml-3 flex-1`}
+              >
                 {social.type.charAt(0).toUpperCase() + social.type.slice(1)}
               </Text>
-              <Ionicons name="chevron-forward" size={16} color={theme === 'dark' ? '#6B7280' : '#9CA3AF'} />
+              <Ionicons
+                name="chevron-forward"
+                size={16}
+                color={theme === "dark" ? "#6B7280" : "#9CA3AF"}
+              />
             </TouchableOpacity>
           )
         )}
@@ -829,20 +914,27 @@ export default function IndividualToken() {
     </View>
   );
 
-
   const renderTokenInfo = () => (
-    <View className={`px-5 py-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-lg font-semibold mb-4`}>
+    <View
+      className={`px-5 py-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
+    >
+      <Text
+        className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-lg font-semibold mb-4`}
+      >
         Token Information
       </Text>
 
       <View className="space-y-4">
         <View>
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm mb-1`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm mb-1`}
+          >
             Contract Address
           </Text>
           <View className="flex-row items-center">
-            <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-sm flex-1 font-mono`}>
+            <Text
+              className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-sm flex-1 font-mono`}
+            >
               {tokenData.basicInfo.contractAddress.slice(0, 20)}...
             </Text>
             <TouchableOpacity className="ml-2">
@@ -852,38 +944,58 @@ export default function IndividualToken() {
         </View>
 
         <View className="flex-row justify-between">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             Chain
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-sm capitalize`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-sm capitalize`}
+          >
             {tokenData.basicInfo.chainId}
           </Text>
         </View>
 
         <View className="flex-row justify-between">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             DEX
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-sm capitalize`}>
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-sm capitalize`}
+          >
             {tokenData.basicInfo.dexId}
           </Text>
         </View>
 
         <View className="flex-row justify-between">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             Total Trades (All Time)
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-sm`}>
-            {formatNumber(parseInt(tokenData.tradingActivity.allTime.totalTrades))}
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-sm`}
+          >
+            {formatNumber(
+              parseInt(tokenData.tradingActivity.allTime.totalTrades)
+            )}
           </Text>
         </View>
 
         <View className="flex-row justify-between">
-          <Text className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+          <Text
+            className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"} text-sm`}
+          >
             Total Volume (All Time)
           </Text>
-          <Text className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-sm`}>
-            {formatCurrency(parseFloat(tokenData.tradingActivity.allTime.totalVolume))}
+          <Text
+            className={`${theme === "dark" ? "text-white" : "text-gray-900"} text-sm`}
+          >
+            {formatCurrency(
+              parseFloat(tokenData.tradingActivity.allTime.totalVolume)
+            )}
           </Text>
         </View>
       </View>
@@ -925,7 +1037,7 @@ export default function IndividualToken() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'overview':
+      case "overview":
         return (
           <>
             {renderMarketStats()}
@@ -933,11 +1045,11 @@ export default function IndividualToken() {
             {renderSocialLinks()}
           </>
         );
-      case 'chart':
+      case "chart":
         return renderPriceChart();
-      case 'trades':
+      case "trades":
         return renderTradingActivity();
-      case 'info':
+      case "info":
         return renderTokenInfo();
       default:
         return (
@@ -949,13 +1061,26 @@ export default function IndividualToken() {
     }
   };
 
+  const hasChartData = chartData && chartData.length > 0;
+
+  const renderNoDataContent = () => (
+    <View className="flex-1 items-center justify-center">
+      <Text className="text-gray-500 text-lg">No data available</Text>
+    </View>
+  );
+
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={!isChartPressed}
+      >
         {renderHeader()}
         {renderTabNavigation()}
-        {renderTabContent()}
-      </ScrollView>
+        {hasChartData ? renderTabContent() : renderNoDataContent()}
+        </ScrollView>
     </SafeAreaView>
   );
 }

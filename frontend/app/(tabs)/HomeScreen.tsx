@@ -70,6 +70,8 @@ export default function HomeScreen() {
   const colors = Colors[theme];
   const { isConnected, filteredData, connectionStatus } = useSocket();
 
+  console.log("Connection Status:", connectionStatus);
+
   const globalStats = (filteredData as any)?.data?.otherData?.globalStats || [];
 
   const liveTokenData = (filteredData as any)?.data?.tableData || [];
@@ -577,7 +579,7 @@ export default function HomeScreen() {
               theme === "dark" ? "text-white" : "text-gray-900"
             } text-xl font-bold tracking-wide`}
           >
-            COIN FLOW
+            BelieveScreener
           </Text>
           <View className="flex-row gap-4">
             {/* Theme Toggle Button */}

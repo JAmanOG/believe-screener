@@ -71,10 +71,15 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
       setIsConnected(false);
       setLastError(error.message);
 
+      // Log connection error
+      console.error("Socket connection error:", error);
+
       if (error.message.includes("xhr poll error")) {
         setConnectionStatus("Server not reachable");
       } else if (error.message.includes("websocket error")) {
         setConnectionStatus("Connection issue");
+      } else if (error.message.includes("timeout")) {
+        setConnectionStatus("Connection timed out");
       } else {
         setConnectionStatus("Connection Error");
       }
@@ -90,10 +95,14 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     socket.on("reconnect_error", (error) => {
       setConnectionStatus("Reconnection Failed");
       setLastError(error.message);
+      // Log reconnection error
+      console.error("Socket reconnection error:", error);
     });
 
     socket.on("reconnect_failed", () => {
       setConnectionStatus("Connection Failed");
+      // Log reconnection failed
+      console.error("Socket reconnection failed");
     });
 
     // Listen for filtered data updates

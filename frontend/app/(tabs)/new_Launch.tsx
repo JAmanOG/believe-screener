@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {
   FlatList,
   Image,
+  Linking,
   StyleSheet,
   Text,
   TextInput,
@@ -123,6 +124,14 @@ const TokenRow: React.FC<{ token: NewLaunchToken; theme: string }> = React.memo(
     return "#3B82F6";
   };
 
+    const openLink = async (url: string) => {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      }
+    };
+  
+
   return (
     <TouchableOpacity className="flex-row items-center py-4 px-5">
       <View className="flex-row items-center flex-1 mr-2">
@@ -167,6 +176,7 @@ const TokenRow: React.FC<{ token: NewLaunchToken; theme: string }> = React.memo(
 
       <View className="items-center justify-center w-20 mx-1">
         <TouchableOpacity
+          onPress={() => openLink(token.contract.tradeLink)}
           className={`px-3 py-1.5 rounded-full border ${
             theme === "dark"
               ? "border-blue-500 bg-blue-500/10"

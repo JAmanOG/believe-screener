@@ -41,18 +41,17 @@ export default function TabLayout() {
           <Tabs.Screen
             name="top"
             options={{
-              title: 'Stocks',
-              tabBarIcon: ({ color }) => <IconSymbol size={24} name="chart.line.uptrend.xyaxis" color={color} />,
+              title: 'Top Tokens',
+              tabBarIcon: ({ color }) => <IconSymbol size={24} name="auto-graph.fill" color={color} />,
             }}
           />
           <Tabs.Screen
             name="new_Launch"
             options={{
               title: 'New Launch',
-              tabBarIcon: ({ color }) => <IconSymbol size={24} name="cube.box.fill" color={color} />,
+              tabBarIcon: ({ color }) => <IconSymbol size={24} name="local-fire-department.box.fill" color={color} />,
             }}
           />
-
         </Tabs>
       );
     }

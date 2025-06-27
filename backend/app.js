@@ -7,11 +7,22 @@ import { createServer as createHttpsServer } from 'https';
 import { Server } from "socket.io";
 import { fileURLToPath } from "url";
 import { individualComponent } from './fetching.js';
+import rateLimit from 'express-rate-limit';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again in a minute.' }
+});
+
+app.use(limiter);
 
 // const sslOptions = {
 //   key: fs.readFileSync(path.join(__dirname, 'ssl', 'private-key.pem')),

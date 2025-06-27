@@ -1,16 +1,17 @@
 import { io } from "socket.io-client";
 
 // Use http and prioritize polling for React Native/Expo
-const socket = io(`https://l7s75wk0-3000.inc1.devtunnels.ms/`, {
+const socket = io(`https://believerappbackend.yellowbeach-624b30e5.centralindia.azurecontainerapps.io`, {
     path: "/socket.io/",
-    transports: ["polling", "websocket"], // Try polling first, then websocket
+    transports: ["websocket", "polling"],
     autoConnect: false, // Let the context handle connection
     reconnection: true,
     reconnectionAttempts: 5,
     reconnectionDelay: 2000,
     reconnectionDelayMax: 5000,
-    timeout: 10000,
+    timeout: 100000,
     forceNew: true, // Create a new connection
+    secure: true,
 });
 
 export default socket;
