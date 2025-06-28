@@ -85,7 +85,15 @@ backend/
 - **ecosystem.config.cjs** configures PM2 to run both the scraper and API server as separate processes.
 - **Dockerfile** builds a minimal Node.js image, installs Chrome for Puppeteer, and sets up the app for production.
 
----
+### 6. Continuous Deployment to Azure Container App
+
+This project uses GitHub Actions to automate backend deployment:
+
+- **Trigger:** On push to `master` or manual dispatch.
+- **Build:** Checks out code, builds a Docker image for the backend.
+- **Push:** Pushes the image to Azure Container Registry.
+- **Deploy:** Deploys the new image to Azure Container Apps using environment variables from GitHub secrets.
+- **Deployment Link:** https://believerappbackend.yellowbeach-624b30e5.centralindia.azurecontainerapps.io
 
 ## Key Files
 
